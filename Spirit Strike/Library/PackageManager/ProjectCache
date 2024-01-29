@@ -5,16 +5,16 @@ m_ProjectFiles:
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 638421376318102731
-    m_Hash: 2536146341
+      ticks: 638421388266990571
+    m_Hash: 341340849
   m_LockFileStatus:
     m_FilePath: D:/Haeb/dev/Github/Project_MakingDeveloper/Spirit-Strike/Spirit Strike/Packages/packages-lock.json
     m_PathExists: 1
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 638421376318112752
-    m_Hash: 1969373793
+      ticks: 638421388267500269
+    m_Hash: 4158299651
 m_EmbeddedPackageManifests:
   m_ManifestsStatus: {}
 m_LocalPackages:
