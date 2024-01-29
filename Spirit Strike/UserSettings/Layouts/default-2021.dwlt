@@ -48,7 +48,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 200}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 107
+  controlID: 89
 --- !u!114 &3
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -223,7 +223,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 200}
   m_MaxSize: {x: 16192, y: 16192}
   vertical: 1
-  controlID: 19
+  controlID: 90
 --- !u!114 &10
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -248,7 +248,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 100}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 20
+  controlID: 91
 --- !u!114 &11
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -268,8 +268,8 @@ MonoBehaviour:
     y: 0
     width: 1543.3334
     height: 916
-  m_MinSize: {x: 202, y: 221}
-  m_MaxSize: {x: 4002, y: 4021}
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 16}
   m_Panes:
   - {fileID: 16}
@@ -397,7 +397,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 005d0000
     m_LastClickedID: 23808
-    m_ExpandedIDs: 00000000a05c0000a25c0000a65c0000a85c0000aa5c0000ac5c0000ae5c0000b05c000000ca9a3b
+    m_ExpandedIDs: 000000003e5d0000405d0000425d0000445d0000465d0000485d00004a5d00004c5d0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -425,7 +425,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000a05c0000a25c0000a45c0000a65c0000a85c0000aa5c0000ac5c0000ae5c0000b05c0000
+    m_ExpandedIDs: 000000003e5d0000405d0000425d0000445d0000465d0000485d00004a5d00004c5d0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -555,21 +555,21 @@ MonoBehaviour:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: 96eaffff8cfaffffa8faffffacfaffffb0faffffb8faffffe4faffff00fbffff04fbffff08fbffff0cfbffff10fbffff32fbffff365a0000
+      m_ExpandedIDs: 32fbffff025a0000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
-        m_Name: clavicle_l
-        m_OriginalName: clavicle_l
+        m_Name: 
+        m_OriginalName: 
         m_EditFieldRect:
           serializedVersion: 2
           x: 0
           y: 0
           width: 0
           height: 0
-        m_UserData: -1296
+        m_UserData: 0
         m_IsWaitingForDelay: 0
         m_IsRenaming: 0
-        m_OriginalEventType: 0
+        m_OriginalEventType: 11
         m_IsRenamingFilename: 0
         m_ClientGUIView: {fileID: 4}
       m_SearchString: 
@@ -804,9 +804,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: -2.3801644, y: 2.5574925, z: 2.075209}
+    m_Target: {x: 0.3776691, y: -2.8123074, z: 6.7565746}
     speed: 2
-    m_Value: {x: -2.3801644, y: 2.5574925, z: 2.075209}
+    m_Value: {x: 0.3776691, y: -2.8123074, z: 6.7565746}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -853,13 +853,13 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: 0.035684034, y: -0.0039004677, z: -0.00013691632, w: -0.9993976}
+    m_Target: {x: -0.29772422, y: 0.12044297, z: -0.037900086, w: -0.9463186}
     speed: 2
-    m_Value: {x: 0.035682537, y: -0.003900304, z: -0.00013691057, w: -0.9993556}
+    m_Value: {x: -0.29759407, y: 0.123275116, z: -0.038791116, w: -0.94590497}
   m_Size:
-    m_Target: 3.7939322
+    m_Target: 9.720782
     speed: 2
-    m_Value: 3.7939322
+    m_Value: 9.720782
   m_Ortho:
     m_Target: 0
     speed: 2

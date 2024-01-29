@@ -581,7 +581,7 @@ Transform:
   - {fileID: 2130498058}
   - {fileID: 1033288214}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &298327100
 PrefabInstance:
@@ -2185,7 +2185,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1276022080
 MonoBehaviour:
@@ -2356,6 +2356,7 @@ MonoBehaviour:
   _attackSpeed: 1
   _attackDelay: 0
   _targetEnemy: {fileID: 1276022080}
+  _rayDistance: 1.5
 --- !u!1001 &1748798698
 PrefabInstance:
   m_ObjectHideFlags: 0
