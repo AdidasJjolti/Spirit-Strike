@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.IO;
 
 public class PlayerControl : MonoBehaviour
 {
@@ -22,6 +23,8 @@ public class PlayerControl : MonoBehaviour
     int _damage = 1;
 
     [SerializeField] float _rayDistance = 1.5f;
+
+    public PlayerData playerData;
 
     public float attackSpeed
     {
@@ -111,4 +114,30 @@ public class PlayerControl : MonoBehaviour
             }
         }
     }
+
+    [ContextMenu("To Json Data")]
+    void SavePlayerDataToJson()
+    {
+        string jsonData = JsonUtility.ToJson(playerData, true);
+        string path = Path.Combine(Application.dataPath, "playerData.json");
+        File.WriteAllText(path, jsonData);
+    }
+
+    [ContextMenu("From Json Data")]
+    void LoadPlayerDataFromJson()
+    {
+        string path = Path.Combine(Application.dataPath, "playerData.json");
+        string jsonData = File.ReadAllText(path);
+        playerData = JsonUtility.FromJson<PlayerData>(jsonData);
+    }
+}
+
+[System.Serializable]
+public class PlayerData
+{
+    public string name;
+    public int age;
+    public int level;
+    public bool isDead;
+    public string[] items;
 }

@@ -202,7 +202,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8189980434977739222, guid: 2dfbb63c9cdf7504faf4ff26b0581598, type: 3}
       propertyPath: m_Name
-      value: Player - MaleCharacterPBR
+      value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 8855052669661678444, guid: 2dfbb63c9cdf7504faf4ff26b0581598, type: 3}
       propertyPath: m_RootOrder
@@ -2357,6 +2357,12 @@ MonoBehaviour:
   _attackDelay: 0
   _targetEnemy: {fileID: 1276022080}
   _rayDistance: 1.5
+  playerData:
+    name: 
+    age: 0
+    level: 0
+    isDead: 0
+    items: []
 --- !u!1001 &1748798698
 PrefabInstance:
   m_ObjectHideFlags: 0

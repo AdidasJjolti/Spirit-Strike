@@ -1,0 +1,10 @@
+{
+    "name": "Knight",
+    "age": 10,
+    "level": 1,
+    "isDead": false,
+    "items": [
+        "Sword",
+        "Shield"
+    ]
+}
