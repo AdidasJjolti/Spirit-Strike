@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.IO;
 
 public class PlayerControl : MonoBehaviour
 {
@@ -20,6 +21,10 @@ public class PlayerControl : MonoBehaviour
     [SerializeField] float _attackDelay = 1.0f;
     [SerializeField] Enemy _targetEnemy;
     int _damage = 1;
+
+    [SerializeField] float _rayDistance = 1.5f;
+
+    public PlayerData playerData;
 
     public float attackSpeed
     {
@@ -48,7 +53,7 @@ public class PlayerControl : MonoBehaviour
 
         transform.position += _moveDir * _moveSpeed * Time.deltaTime;
 
-        if(_moveDir != Vector3.zero)
+        if (_moveDir != Vector3.zero)
         {
             _isIdle = false;
             _isWalking = true;
@@ -67,7 +72,7 @@ public class PlayerControl : MonoBehaviour
 
         transform.LookAt(transform.position + _moveDir);
 
-        if(Input.GetKey(KeyCode.Space))
+        if (Input.GetKey(KeyCode.Space))
         {
             Attack();
         }
@@ -76,11 +81,13 @@ public class PlayerControl : MonoBehaviour
             _isAttacking = false;
             _animator.SetBool("isAttacking", _isAttacking);
         }
+
+        Debug.DrawRay(transform.position + new Vector3(0, 0.5f, 0), transform.forward * _rayDistance, Color.red);
     }
 
     void Attack()
     {
-        if(_attackDelay < _attackSpeed)
+        if (_attackDelay < _attackSpeed)
         {
             return;
         }
@@ -96,7 +103,31 @@ public class PlayerControl : MonoBehaviour
 
         _attackDelay = 0;
 
-        // ToDo : 목표가 된 적에게 _damage 만큼 체력 깎기
-        _targetEnemy.TakeDamage(_damage);
+        Ray ray = new Ray(transform.position + new Vector3(0, 0.5f, 0), transform.forward);
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit, _rayDistance))
+        {
+            if (hit.collider.GetComponent<Enemy>() == _targetEnemy)
+            {
+                _targetEnemy.TakeDamage(_damage);
+            }
+        }
+    }
+
+    [ContextMenu("To Json Data")]
+    void SavePlayerDataToJson()
+    {
+        string jsonData = JsonUtility.ToJson(playerData, true);
+        string path = Path.Combine(Application.dataPath, "playerData.json");
+        File.WriteAllText(path, jsonData);
+    }
+
+    [ContextMenu("From Json Data")]
+    void LoadPlayerDataFromJson()
+    {
+        string path = Path.Combine(Application.dataPath, "playerData.json");
+        string jsonData = File.ReadAllText(path);
+        playerData = JsonUtility.FromJson<PlayerData>(jsonData);
     }
 }

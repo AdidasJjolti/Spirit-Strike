@@ -358,6 +358,7 @@
 "Assets/Scripts/CameraController.cs"
 "Assets/Scripts/Enemy.cs"
 "Assets/Scripts/PlayerControl.cs"
+"Assets/Scripts/PlayerData.cs"
 "Assets/Scripts/Weapon.cs"
 -langversion:9.0
 
