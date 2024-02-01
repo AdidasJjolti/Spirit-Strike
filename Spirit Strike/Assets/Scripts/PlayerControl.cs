@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
+using LitJson;
 
 public class PlayerControl : MonoBehaviour
 {
@@ -24,7 +25,7 @@ public class PlayerControl : MonoBehaviour
 
     [SerializeField] float _rayDistance = 1.5f;
 
-    public PlayerData playerData;
+    [SerializeField] PlayerData _data;
 
     public float attackSpeed
     {
@@ -41,6 +42,8 @@ public class PlayerControl : MonoBehaviour
 
         _animator = GetComponent<Animator>();
         _animator.SetBool("isIdle", true);
+
+        LoadPlayerDataFromJson();
     }
 
     void Update()
@@ -115,19 +118,18 @@ public class PlayerControl : MonoBehaviour
         }
     }
 
-    [ContextMenu("To Json Data")]
-    void SavePlayerDataToJson()
-    {
-        string jsonData = JsonUtility.ToJson(playerData, true);
-        string path = Path.Combine(Application.dataPath, "playerData.json");
-        File.WriteAllText(path, jsonData);
-    }
-
-    [ContextMenu("From Json Data")]
     void LoadPlayerDataFromJson()
     {
-        string path = Path.Combine(Application.dataPath, "playerData.json");
-        string jsonData = File.ReadAllText(path);
-        playerData = JsonUtility.FromJson<PlayerData>(jsonData);
+        string JsonString = File.ReadAllText(Application.dataPath + "/Resources/PlayerData.json");
+        JsonData jsonData = JsonMapper.ToObject(JsonString);
+        ParsingJsonQuest(jsonData);
+    }
+
+    void ParsingJsonQuest(JsonData data)
+    {
+        string level = data[0]["level"].ToString();
+        string hp = data[0]["hp"].ToString();
+
+        Debug.Log($"{level}, {hp}");
     }
 }

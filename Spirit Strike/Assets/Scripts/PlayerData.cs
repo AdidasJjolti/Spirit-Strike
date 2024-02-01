@@ -5,9 +5,11 @@ using UnityEngine;
 [System.Serializable]
 public class PlayerData
 {
-    public string name;
-    public int age;
-    public int level;
-    public bool isDead;
-    public string[] items;
+    public int _level;
+    public int _hp;
+    public int _attack;
+    public int _defence;
+    public int _dodge;
+    public int _critical;
+    public float _atkSpeed;
 }
