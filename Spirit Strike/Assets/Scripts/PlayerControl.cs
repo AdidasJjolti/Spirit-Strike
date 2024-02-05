@@ -26,6 +26,7 @@ public class PlayerControl : MonoBehaviour
     [SerializeField] float _rayDistance = 1.5f;
 
     [SerializeField] PlayerData _data;
+    [SerializeField] LayerMask _targetLayer;
 
     public float attackSpeed
     {
@@ -48,6 +49,11 @@ public class PlayerControl : MonoBehaviour
 
     void Update()
     {
+        if (_targetEnemy == null)
+        {
+            FindNearestEnemy();
+        }
+
         _attackDelay += Time.deltaTime;
 
         _hAxis = Input.GetAxisRaw("Horizontal");
@@ -85,7 +91,7 @@ public class PlayerControl : MonoBehaviour
             _animator.SetBool("isAttacking", _isAttacking);
         }
 
-        Debug.DrawRay(transform.position + new Vector3(0, 0.5f, 0), transform.forward * _rayDistance, Color.red);
+        //Debug.DrawRay(transform.position + new Vector3(0, 0.5f, 0), transform.forward * _rayDistance, Color.red);
     }
 
     void Attack()
@@ -116,6 +122,29 @@ public class PlayerControl : MonoBehaviour
                 _targetEnemy.TakeDamage(_damage);
             }
         }
+    }
+
+    void FindNearestEnemy()
+    {
+        Enemy targetEnemy = null;
+        float diff = 100f;
+
+        RaycastHit[] targets = Physics.SphereCastAll(transform.position, 100f, Vector3.forward, 0f, _targetLayer, QueryTriggerInteraction.UseGlobal);
+
+        foreach (var target in targets)
+        {
+            Vector3 myPos = transform.position;
+            Vector3 targetPos = target.transform.position;
+            float curDiff = Vector3.Distance(myPos, targetPos);
+
+            if(curDiff < diff)
+            {
+                diff = curDiff;
+                targetEnemy = target.transform.gameObject.GetComponent<Enemy>();
+            }
+        }
+
+        _targetEnemy = targetEnemy;
     }
 
     void LoadPlayerDataFromJson()
