@@ -20,6 +20,11 @@ public class CameraController : MonoBehaviour
 
         if(Physics.Raycast(transform.position, direction * 100, out hit, distance))
         {
+            if(hit.transform.GetComponent<Enemy>())
+            {
+                return;
+            }
+
             _obstacleRenderer = hit.transform.GetComponentInChildren<Renderer>();
             if(_obstacleRenderer != null)
             {

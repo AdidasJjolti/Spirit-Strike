@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using LitJson;
+using UnityEngine.AI;
 
 public class PlayerControl : MonoBehaviour
 {
@@ -17,6 +18,7 @@ public class PlayerControl : MonoBehaviour
     float _moveSpeed = 1f;
 
     Animator _animator;
+    NavMeshAgent _agent;
 
     [SerializeField] float _attackSpeed = 1.0f;
     [SerializeField] float _attackDelay = 1.0f;
@@ -44,56 +46,108 @@ public class PlayerControl : MonoBehaviour
         _animator = GetComponent<Animator>();
         _animator.SetBool("isIdle", true);
 
-        LoadPlayerDataFromJson();
+        _agent = GetComponent<NavMeshAgent>();
+        _agent.speed = _moveSpeed;
+
+        //LoadPlayerDataFromJson();
     }
 
     void Update()
     {
         if (_targetEnemy == null)
         {
-            FindNearestEnemy();
-        }
-
-        _attackDelay += Time.deltaTime;
-
-        _hAxis = Input.GetAxisRaw("Horizontal");
-        _vAxis = Input.GetAxisRaw("Vertical");
-        _moveDir = new Vector3(_hAxis, 0, _vAxis).normalized;
-
-        transform.position += _moveDir * _moveSpeed * Time.deltaTime;
-
-        if (_moveDir != Vector3.zero)
-        {
-            _isIdle = false;
-            _isWalking = true;
-
-            _animator.SetBool("isWalking", _isWalking);
-            _animator.SetBool("isIdle", _isIdle);
-        }
-        else
-        {
             _isIdle = true;
             _isWalking = false;
 
             _animator.SetBool("isWalking", _isWalking);
             _animator.SetBool("isIdle", _isIdle);
-        }
 
-        transform.LookAt(transform.position + _moveDir);
-
-        if (Input.GetKey(KeyCode.Space))
-        {
-            Attack();
+            _agent.velocity = Vector3.zero;
+            FindNearestEnemy();
         }
         else
         {
-            _isAttacking = false;
-            _animator.SetBool("isAttacking", _isAttacking);
+            Move();
         }
 
-        //Debug.DrawRay(transform.position + new Vector3(0, 0.5f, 0), transform.forward * _rayDistance, Color.red);
+        if(_targetEnemy == null)
+        {
+            return;
+        }
+        else
+        {
+            if (Vector3.Distance(transform.position, _targetEnemy.transform.position) <= 1.0f)
+            {
+                if (_targetEnemy != null)
+                {
+                    _agent.velocity = Vector3.zero;
+                    Attack();
+                }
+            }
+        }
+
+        _attackDelay += Time.deltaTime;
+
+        //_hAxis = Input.GetAxisRaw("Horizontal");
+        //_vAxis = Input.GetAxisRaw("Vertical");
+        //_moveDir = new Vector3(_hAxis, 0, _vAxis).normalized;
+
+        //transform.position += _moveDir * _moveSpeed * Time.deltaTime;
+
+        //if (_moveDir != Vector3.zero)
+        //{
+        //    _isIdle = false;
+        //    _isWalking = true;
+
+        //    _animator.SetBool("isWalking", _isWalking);
+        //    _animator.SetBool("isIdle", _isIdle);
+        //}
+        //else
+        //{
+        //    _isIdle = true;
+        //    _isWalking = false;
+
+        //    _animator.SetBool("isWalking", _isWalking);
+        //    _animator.SetBool("isIdle", _isIdle);
+        //}
+
+        //transform.LookAt(transform.position + _moveDir);
+
+        //if (Input.GetKey(KeyCode.Space))
+        //{
+        //    Attack();
+        //}
+        //else
+        //{
+        //    _isAttacking = false;
+        //    _animator.SetBool("isAttacking", _isAttacking);
+        //}
     }
 
+    void FixedUpdate()
+    {
+        FreezeVelocity();
+    }
+
+    // 물리력이 NavAgent의 이동을 방해하지 않도록 속도를 0으로 설정
+    void FreezeVelocity()
+    {
+        _rigid.velocity = Vector3.zero;
+        _rigid.angularVelocity = Vector3.zero;
+    }
+
+    void Move()
+    {
+        _agent.SetDestination(_targetEnemy.transform.position);
+
+        _isIdle = false;
+        _isWalking = true;
+
+        _animator.SetBool("isWalking", _isWalking);
+        _animator.SetBool("isIdle", _isIdle);
+    }
+
+    // ToDo : 애니메이션 동작에 코루틴을 적용하여 버벅이는 것처럼 보이는 현상 수정 필요
     void Attack()
     {
         if (_attackDelay < _attackSpeed)
@@ -120,6 +174,14 @@ public class PlayerControl : MonoBehaviour
             if (hit.collider.GetComponent<Enemy>() == _targetEnemy)
             {
                 _targetEnemy.TakeDamage(_damage);
+
+                // 타겟 몬스터가 죽으면 다음 타겟을 설정하기 위해 null로 변경
+                if(_targetEnemy.HP <= 0)
+                {
+                    _targetEnemy = null;
+                    _isAttacking = false;
+                    _animator.SetBool("isAttacking", _isAttacking);
+                }
             }
         }
     }

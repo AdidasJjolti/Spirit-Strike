@@ -5,10 +5,11 @@ using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour
 {
-    [SerializeField] int _HP = 100;
+    [SerializeField] int _HP = 2;
     [SerializeField] PlayerControl _player;   // 공격 목표물로 사용할 플레이어 위치 저장
     NavMeshAgent _agent;
     Rigidbody _rigid;
+    Animator _animator;
 
     public int HP
     {
@@ -30,6 +31,7 @@ public class Enemy : MonoBehaviour
     {
         _agent = GetComponent<NavMeshAgent>();
         _rigid = GetComponent<Rigidbody>();
+        _animator = GetComponent<Animator>();
     }
 
     void Update()
@@ -40,10 +42,12 @@ public class Enemy : MonoBehaviour
         {
             //_agent.SetDestination(transform.position);
             _agent.velocity = Vector3.zero;
+            _animator.SetBool("isMoving", false);
         }
         else
         {
             _agent.SetDestination(_player.transform.position);
+            _animator.SetBool("isMoving", true);
         }
         // 플레이어 공격
     }
@@ -63,6 +67,12 @@ public class Enemy : MonoBehaviour
     public void TakeDamage(int damage)
     {
         _HP -= damage;
-        Debug.Log($"HP remaining : {_HP}");
+        Debug.Log($"현재 체력은 : {_HP}");
+
+
+        if(_HP <= 0)
+        {
+            gameObject.SetActive(false);
+        }
     }
 }
