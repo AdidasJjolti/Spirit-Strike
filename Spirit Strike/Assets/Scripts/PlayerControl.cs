@@ -10,7 +10,6 @@ public class PlayerControl : MonoBehaviour
     Rigidbody _rigid;
     [SerializeField] bool _isWalking;
     [SerializeField] bool _isIdle;
-    [SerializeField] bool _isAttacking;
 
     float _hAxis;
     float _vAxis;
@@ -67,22 +66,17 @@ public class PlayerControl : MonoBehaviour
         }
         else
         {
-            Move();
-        }
-
-        if(_targetEnemy == null)
-        {
-            return;
-        }
-        else
-        {
-            if (Vector3.Distance(transform.position, _targetEnemy.transform.position) <= 1.0f)
+            if (Vector3.Distance(transform.position, _targetEnemy.transform.position) <= 1.5f)
             {
                 if (_targetEnemy != null)
                 {
                     _agent.velocity = Vector3.zero;
                     Attack();
                 }
+            }
+            else
+            {
+                Move();
             }
         }
 
@@ -161,8 +155,7 @@ public class PlayerControl : MonoBehaviour
         _animator.SetBool("isWalking", _isWalking);
         _animator.SetBool("isIdle", _isIdle);
 
-        _isAttacking = true;
-        _animator.SetBool("isAttacking", _isAttacking);
+        _animator.SetTrigger("isAttacking");
 
         _attackDelay = 0;
 
@@ -179,8 +172,6 @@ public class PlayerControl : MonoBehaviour
                 if(_targetEnemy.HP <= 0)
                 {
                     _targetEnemy = null;
-                    _isAttacking = false;
-                    _animator.SetBool("isAttacking", _isAttacking);
                 }
             }
         }
