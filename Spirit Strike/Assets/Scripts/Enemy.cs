@@ -38,17 +38,20 @@ public class Enemy : MonoBehaviour
     {
         // 플레이어 따라가기
         // 플레이어와 충분히 가까워지면 추적 정지
-        if((transform.position - _player.transform.position).magnitude < 1.0f)
-        {
-            //_agent.SetDestination(transform.position);
-            _agent.velocity = Vector3.zero;
-            _animator.SetBool("isMoving", false);
-        }
-        else
-        {
-            _agent.SetDestination(_player.transform.position);
-            _animator.SetBool("isMoving", true);
-        }
+        //if((transform.position - _player.transform.position).magnitude < 1.0f)
+        //{
+        //    _agent.velocity = Vector3.zero;
+        //    _animator.SetBool("isMoving", false);
+        //}
+        //else
+        //{
+        //    _agent.SetDestination(_player.transform.position);
+        //    _animator.SetBool("isMoving", true);
+        //}
+
+        _agent.SetDestination(_player.transform.position);
+        _animator.SetBool("isMoving", true);
+
         // 플레이어 공격
     }
 
@@ -72,7 +75,15 @@ public class Enemy : MonoBehaviour
 
         if(_HP <= 0)
         {
-            gameObject.SetActive(false);
+            StartCoroutine("Die");
         }
+    }
+
+    IEnumerator Die()
+    {
+        _animator.SetTrigger("Die");
+        yield return new WaitForSecondsRealtime(1.0f);
+        gameObject.SetActive(false);
+        yield return null;
     }
 }

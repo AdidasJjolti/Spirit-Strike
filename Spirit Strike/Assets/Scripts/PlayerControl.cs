@@ -14,7 +14,7 @@ public class PlayerControl : MonoBehaviour
     float _hAxis;
     float _vAxis;
     Vector3 _moveDir;
-    float _moveSpeed = 1f;
+    float _moveSpeed = 3.0f;
 
     Animator _animator;
     NavMeshAgent _agent;
@@ -61,8 +61,9 @@ public class PlayerControl : MonoBehaviour
             _animator.SetBool("isWalking", _isWalking);
             _animator.SetBool("isIdle", _isIdle);
 
-            _agent.velocity = Vector3.zero;
+            _agent.isStopped = true;
             FindNearestEnemy();
+            Debug.Log("타겟 몬스터 탐색");
         }
         else
         {
@@ -70,7 +71,8 @@ public class PlayerControl : MonoBehaviour
             {
                 if (_targetEnemy != null)
                 {
-                    _agent.velocity = Vector3.zero;
+                    //_agent.velocity = Vector3.zero;
+                    _agent.isStopped = true;
                     Attack();
                 }
             }
@@ -81,41 +83,6 @@ public class PlayerControl : MonoBehaviour
         }
 
         _attackDelay += Time.deltaTime;
-
-        //_hAxis = Input.GetAxisRaw("Horizontal");
-        //_vAxis = Input.GetAxisRaw("Vertical");
-        //_moveDir = new Vector3(_hAxis, 0, _vAxis).normalized;
-
-        //transform.position += _moveDir * _moveSpeed * Time.deltaTime;
-
-        //if (_moveDir != Vector3.zero)
-        //{
-        //    _isIdle = false;
-        //    _isWalking = true;
-
-        //    _animator.SetBool("isWalking", _isWalking);
-        //    _animator.SetBool("isIdle", _isIdle);
-        //}
-        //else
-        //{
-        //    _isIdle = true;
-        //    _isWalking = false;
-
-        //    _animator.SetBool("isWalking", _isWalking);
-        //    _animator.SetBool("isIdle", _isIdle);
-        //}
-
-        //transform.LookAt(transform.position + _moveDir);
-
-        //if (Input.GetKey(KeyCode.Space))
-        //{
-        //    Attack();
-        //}
-        //else
-        //{
-        //    _isAttacking = false;
-        //    _animator.SetBool("isAttacking", _isAttacking);
-        //}
     }
 
     void FixedUpdate()
@@ -132,7 +99,13 @@ public class PlayerControl : MonoBehaviour
 
     void Move()
     {
+        if(_agent.isStopped)
+        {
+            _agent.isStopped = false;
+        }
+
         _agent.SetDestination(_targetEnemy.transform.position);
+        _agent.speed = _moveSpeed;
 
         _isIdle = false;
         _isWalking = true;
@@ -141,13 +114,14 @@ public class PlayerControl : MonoBehaviour
         _animator.SetBool("isIdle", _isIdle);
     }
 
-    // ToDo : 애니메이션 동작에 코루틴을 적용하여 버벅이는 것처럼 보이는 현상 수정 필요
     void Attack()
     {
         if (_attackDelay < _attackSpeed)
         {
             return;
         }
+
+        transform.LookAt(_targetEnemy.transform);
 
         _isIdle = false;
         _isWalking = false;
@@ -156,8 +130,6 @@ public class PlayerControl : MonoBehaviour
         _animator.SetBool("isIdle", _isIdle);
 
         _animator.SetTrigger("isAttacking");
-
-        _attackDelay = 0;
 
         Ray ray = new Ray(transform.position + new Vector3(0, 0.5f, 0), transform.forward);
         RaycastHit hit;
@@ -168,13 +140,16 @@ public class PlayerControl : MonoBehaviour
             {
                 _targetEnemy.TakeDamage(_damage);
 
-                // 타겟 몬스터가 죽으면 다음 타겟을 설정하기 위해 null로 변경
+                // 타겟 몬스터가 죽으면 다음 타겟을 설정하기 위해 null로 변경 후 다음 타켓 몬스터 탐색
                 if(_targetEnemy.HP <= 0)
                 {
                     _targetEnemy = null;
+                    Debug.Log("타겟 몬스터 해제");
                 }
             }
         }
+
+        _attackDelay = 0;
     }
 
     void FindNearestEnemy()
@@ -182,10 +157,17 @@ public class PlayerControl : MonoBehaviour
         Enemy targetEnemy = null;
         float diff = 100f;
 
+        // ToDo : Raycast 대신에 맵 내에 있는 몬스터가 스폰될 때마다 미리 정의한 리스트에 몬스터를 추가하고 여기에서 거리를 탐색하도록 수정
+        // ToDo : 오브젝트 풀, 스피어캐스트, 또는 다른 탐색 로직을 사용하여 테스트해보기
         RaycastHit[] targets = Physics.SphereCastAll(transform.position, 100f, Vector3.forward, 0f, _targetLayer, QueryTriggerInteraction.UseGlobal);
 
         foreach (var target in targets)
         {
+            if(target.transform.GetComponent<Enemy>().HP <= 0)
+            {
+                continue;
+            }
+
             Vector3 myPos = transform.position;
             Vector3 targetPos = target.transform.position;
             float curDiff = Vector3.Distance(myPos, targetPos);
