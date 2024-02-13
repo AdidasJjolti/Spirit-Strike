@@ -383,9 +383,13 @@
 "Assets/Samples/Universal RP/12.1.7/URP Package Samples/SharedAssets/Scripts/FirstPersonController.cs"
 "Assets/Scripts/CameraController.cs"
 "Assets/Scripts/Enemy.cs"
+"Assets/Scripts/ObjectManager.cs"
 "Assets/Scripts/PlayerControl.cs"
 "Assets/Scripts/PlayerData.cs"
+"Assets/Scripts/Singleton.cs"
+"Assets/Scripts/SpawnEnemy.cs"
 "Assets/Scripts/Weapon.cs"
+"Assets/Travis Game Assets/Hit Impact Effects/Demo Scene/Scripts/HitImpactEffectsPreview.cs"
 -langversion:9.0
 
 /deterministic

@@ -4,6 +4,7 @@ using UnityEngine;
 using System.IO;
 using LitJson;
 using UnityEngine.AI;
+using System.Diagnostics;
 
 public class PlayerControl : MonoBehaviour
 {
@@ -15,6 +16,8 @@ public class PlayerControl : MonoBehaviour
     float _vAxis;
     Vector3 _moveDir;
     float _moveSpeed = 3.0f;
+
+    [SerializeField] int _hp = 10;
 
     Animator _animator;
     NavMeshAgent _agent;
@@ -28,6 +31,7 @@ public class PlayerControl : MonoBehaviour
 
     [SerializeField] PlayerData _data;
     [SerializeField] LayerMask _targetLayer;
+    [SerializeField] ObjectManager _objManager;
 
     public float attackSpeed
     {
@@ -63,7 +67,7 @@ public class PlayerControl : MonoBehaviour
 
             _agent.isStopped = true;
             FindNearestEnemy();
-            Debug.Log("타겟 몬스터 탐색");
+            //UnityEngine.Debug.Log("타겟 몬스터 탐색");
         }
         else
         {
@@ -71,7 +75,6 @@ public class PlayerControl : MonoBehaviour
             {
                 if (_targetEnemy != null)
                 {
-                    //_agent.velocity = Vector3.zero;
                     _agent.isStopped = true;
                     Attack();
                 }
@@ -144,7 +147,7 @@ public class PlayerControl : MonoBehaviour
                 if(_targetEnemy.HP <= 0)
                 {
                     _targetEnemy = null;
-                    Debug.Log("타겟 몬스터 해제");
+                    //Debug.Log("타겟 몬스터 해제");
                 }
             }
         }
@@ -159,11 +162,17 @@ public class PlayerControl : MonoBehaviour
 
         // ToDo : Raycast 대신에 맵 내에 있는 몬스터가 스폰될 때마다 미리 정의한 리스트에 몬스터를 추가하고 여기에서 거리를 탐색하도록 수정
         // ToDo : 오브젝트 풀, 스피어캐스트, 또는 다른 탐색 로직을 사용하여 테스트해보기
+        // 결과 : 오브젝트 풀로 탐색 시 스피어캐스트보다 1.5배 ~ 2배 정도 더 빠르게 검색 가능
+
+        #region
+        // 스피어캐스트로 타겟 몬스터 탐색
+        //Stopwatch watch = new Stopwatch();
+        //watch.Start();
         RaycastHit[] targets = Physics.SphereCastAll(transform.position, 100f, Vector3.forward, 0f, _targetLayer, QueryTriggerInteraction.UseGlobal);
 
         foreach (var target in targets)
         {
-            if(target.transform.GetComponent<Enemy>().HP <= 0)
+            if (target.transform.GetComponent<Enemy>().HP <= 0)
             {
                 continue;
             }
@@ -172,7 +181,7 @@ public class PlayerControl : MonoBehaviour
             Vector3 targetPos = target.transform.position;
             float curDiff = Vector3.Distance(myPos, targetPos);
 
-            if(curDiff < diff)
+            if (curDiff < diff)
             {
                 diff = curDiff;
                 targetEnemy = target.transform.gameObject.GetComponent<Enemy>();
@@ -180,7 +189,47 @@ public class PlayerControl : MonoBehaviour
         }
 
         _targetEnemy = targetEnemy;
+
+        //watch.Stop();
+        //UnityEngine.Debug.Log($"탐색에 걸린 시간은 {watch.ElapsedMilliseconds} + ms");
+        #endregion
+
+        #region
+        // 오브젝트 풀에서 타켓 몬스터 탐색
+        //Stopwatch watch = new Stopwatch();
+        //watch.Start();
+
+        //foreach (var obj in _objManager._monsterList)
+        //{
+        //    if (obj == null || obj.transform.GetComponent<Enemy>() == null || obj.transform.GetComponent<Enemy>().HP <= 0)
+        //    {
+        //        continue;
+        //    }
+
+        //    Vector3 myPos = transform.position;
+        //    Vector3 targetPos = obj.transform.position;
+        //    float curDiff = Vector3.Distance(myPos, targetPos);
+
+        //    if (curDiff < diff)
+        //    {
+        //        diff = curDiff;
+        //        targetEnemy = obj.transform.gameObject.GetComponent<Enemy>();
+        //    }
+        //}
+
+        //_targetEnemy = targetEnemy;
+
+        //watch.Stop();
+        //UnityEngine.Debug.Log($"탐색에 걸린 시간은 {watch.ElapsedMilliseconds} + ms");
+        #endregion
     }
+
+    public void TakeDamage(int damage)
+    {
+        _hp -= damage;
+        //Debug.Log($"아얏! {_hp}");
+    }
+
 
     void LoadPlayerDataFromJson()
     {
@@ -194,6 +243,6 @@ public class PlayerControl : MonoBehaviour
         string level = data[0]["level"].ToString();
         string hp = data[0]["hp"].ToString();
 
-        Debug.Log($"{level}, {hp}");
+        UnityEngine.Debug.Log($"{level}, {hp}");
     }
 }
