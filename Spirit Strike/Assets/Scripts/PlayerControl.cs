@@ -76,7 +76,7 @@ public class PlayerControl : MonoBehaviour
                 if (_targetEnemy != null)
                 {
                     _agent.isStopped = true;
-                    Attack();
+                    //Attack();
                 }
             }
             else

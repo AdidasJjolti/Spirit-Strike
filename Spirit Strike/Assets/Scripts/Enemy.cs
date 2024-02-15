@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using System;
 
 public class Enemy : MonoBehaviour
 {
@@ -14,7 +15,8 @@ public class Enemy : MonoBehaviour
     [SerializeField] float _attackSpeed = 1.0f;
     [SerializeField] float _attackDelay = 1.0f;
     [SerializeField] int _damage = 1;
-    [SerializeField] ParticleSystem _atkEffect; 
+    [SerializeField] ParticleSystem _atkEffect;
+    [SerializeField] float _waitSec;
 
     public int HP
     {
@@ -79,7 +81,7 @@ public class Enemy : MonoBehaviour
     public void TakeDamage(int damage)
     {
         _HP -= damage;
-        Debug.Log($"현재 체력은 : {_HP}");
+        //Debug.Log($"현재 체력은 : {_HP}");
 
 
         if(_HP <= 0)
@@ -101,42 +103,50 @@ public class Enemy : MonoBehaviour
     {
         _agent.SetDestination(_player.transform.position);
         _animator.SetBool("isMoving", true);
+        _animator.SetBool("isAttacking", false);
     }
 
     void AttackPlayer()
     {
+        if(_animator == null)
+        {
+            Debug.LogError("Animator is Null");
+            return;
+        }
+
+        if (_player == null)
+        {
+            Debug.LogError("Player is Null");
+            return;
+        }
+
         if (_attackDelay < _attackSpeed)
         {
+            _animator.SetBool("isAttacking", false);
             return;
         }
 
         transform.LookAt(_player.transform);
         _animator.SetBool("isMoving", false);
-        _animator.SetTrigger("isAttacking");
+        _animator.SetBool("isAttacking", true);
 
         _player.TakeDamage(_damage);
 
-        // ToDo : 공격 애니메이션 재생 진행도에 맞춰서 이펙트를 재생하도록 수정
-
-        if (!_atkEffect.isPlaying)
-        {
-            _atkEffect.Play(true);
-            Debug.Log("이펙트 재생");
-        }
-        //StartCoroutine("PlayEffect");
-
+        StartCoroutine("PlayEffect");
         _attackDelay = 0;
     }
 
     IEnumerator PlayEffect()
     {
-        if(!_atkEffect.isPlaying)
-        {
-            _atkEffect.Play(true);
-            Debug.Log("이펙트 재생");
-        }
-        //yield return new WaitForSeconds(0.5f);
-        //_atkEffect.Stop(true);
+        _atkEffect.gameObject.SetActive(true);
+        yield return new WaitUntil(CheckAnimationState);
+        _atkEffect.Play();
         yield break;
+    }
+
+    // 실제 공격 모션과 이펙트 재생 시점을 맞추기 위해 _waitSec만큼 대기
+    bool CheckAnimationState()
+    {
+        return _animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= _waitSec;
     }
 }
