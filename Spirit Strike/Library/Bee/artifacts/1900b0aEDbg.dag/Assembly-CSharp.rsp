@@ -386,6 +386,7 @@
 "Assets/Scripts/ObjectManager.cs"
 "Assets/Scripts/PlayerControl.cs"
 "Assets/Scripts/PlayerData.cs"
+"Assets/Scripts/PlayerExperienceData.cs"
 "Assets/Scripts/Singleton.cs"
 "Assets/Scripts/SpawnEnemy.cs"
 "Assets/Scripts/Weapon.cs"

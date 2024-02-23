@@ -9,11 +9,11 @@ public class SpawnEnemy : MonoBehaviour
 
     void Start()
     {
-        //int i = 1;
-        //while (i <= 300)
-        //{
-        //    _objManager._monsterList.Add(Instantiate(_enemy, transform));
-        //    i++;
-        //}
+        int i = 1;
+        while (i <= 2)
+        {
+            _objManager._monsterList.Add(Instantiate(_enemy, transform));
+            i++;
+        }
     }
 }

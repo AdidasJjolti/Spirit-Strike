@@ -11,5 +11,5 @@ public class PlayerData
     public int _defence;
     public int _dodge;
     public int _critical;
-    public float _atkSpeed;
+    public int _atkSpeed;
 }
