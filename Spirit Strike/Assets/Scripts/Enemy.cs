@@ -6,7 +6,7 @@ using System;
 
 public class Enemy : MonoBehaviour
 {
-    [SerializeField] int _HP = 2;
+    [SerializeField] int _HP = 50;
     [SerializeField] PlayerControl _player;   // 공격 목표물로 사용할 플레이어 위치 저장
     NavMeshAgent _agent;
     Rigidbody _rigid;
@@ -137,22 +137,10 @@ public class Enemy : MonoBehaviour
     }
 
 
-    // ToDo : 몬스터가 두 마리 이상일 때 파티클 시스템 널레퍼런스 오류가 나는 현상 수정 필요
-    // ToDo : 아직 몬스터가 살아있음에도 파티클 시스템이 날라가는 오류가 있는거 같음
     IEnumerator PlayEffect()
     {
-        if(this == null)
-        {
-            yield break;
-        }
-
         _atkEffect.gameObject.SetActive(true);
         yield return new WaitUntil(CheckAnimationState);
-
-        if (this == null)
-        {
-            yield break;
-        }
 
         _atkEffect.Play();
 
