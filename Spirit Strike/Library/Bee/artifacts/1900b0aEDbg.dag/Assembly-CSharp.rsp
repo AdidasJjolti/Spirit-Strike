@@ -389,6 +389,7 @@
 "Assets/Scripts/PlayerExperienceData.cs"
 "Assets/Scripts/Singleton.cs"
 "Assets/Scripts/SpawnEnemy.cs"
+"Assets/Scripts/UIHPBar.cs"
 "Assets/Scripts/Weapon.cs"
 "Assets/Travis Game Assets/Hit Impact Effects/Demo Scene/Scripts/HitImpactEffectsPreview.cs"
 -langversion:9.0

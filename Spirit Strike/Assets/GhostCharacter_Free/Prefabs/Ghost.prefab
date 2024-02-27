@@ -352,13 +352,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a1c1bf65b221c64f851a65fd4901711, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HP: 50
+  _MaxHP: 20
+  _HP: 20
   _player: {fileID: 0}
   _attackSpeed: 1
   _attackDelay: 1
   _damage: 1
   _atkEffect: {fileID: 2374644240883026974}
   _waitSec: 0.19
+  _hpBarPrefab: {fileID: 4075485195887041563, guid: f4466f219c07d994fa433c204f1b20bc, type: 3}
+  _hpBarOffset: {x: -0.5, y: 2.4, z: 0}
+  _hpBarCanvas: {fileID: 0}
+  _hpBarSlider: {fileID: 711699608707245862, guid: f4466f219c07d994fa433c204f1b20bc, type: 3}
 --- !u!4 &796652407307068396 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 46f311046d2104da8b56be3d0a49a119, type: 3}

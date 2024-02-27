@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using System;
+using UnityEngine.UI;
 
 public class Enemy : MonoBehaviour
 {
+    [SerializeField] int _MaxHP = 50;
     [SerializeField] int _HP = 50;
     [SerializeField] PlayerControl _player;   // 공격 목표물로 사용할 플레이어 위치 저장
     NavMeshAgent _agent;
@@ -17,6 +19,12 @@ public class Enemy : MonoBehaviour
     [SerializeField] int _damage = 1;
     [SerializeField] ParticleSystem _atkEffect;
     [SerializeField] float _waitSec;
+
+    [SerializeField] GameObject _hpBarPrefab;
+    [SerializeField] Vector3 _hpBarOffset = new Vector3(-0.5f, 2.4f, 0);
+    [SerializeField] Canvas _hpBarCanvas;
+    [SerializeField] Slider _hpBarSlider;
+    GameObject _hpBarObj;
 
     public int HP
     {
@@ -32,6 +40,10 @@ public class Enemy : MonoBehaviour
         {
             _player = FindObjectOfType<PlayerControl>();
         }
+
+        _hpBarSlider.gameObject.SetActive(true);
+        _hpBarSlider.maxValue = _MaxHP;
+        _hpBarSlider.value = _MaxHP;
     }
 
     void Awake()
@@ -39,6 +51,8 @@ public class Enemy : MonoBehaviour
         _agent = GetComponent<NavMeshAgent>();
         _rigid = GetComponent<Rigidbody>();
         _animator = GetComponent<Animator>();
+
+        SetHPBar();
     }
 
     void Update()
@@ -95,6 +109,7 @@ public class Enemy : MonoBehaviour
         _animator.SetTrigger("Die");
         yield return new WaitForSecondsRealtime(1.0f);
         //gameObject.SetActive(false);
+        Destroy(_hpBarObj);
         Destroy(this.gameObject);
         yield return null;
     }
@@ -130,7 +145,9 @@ public class Enemy : MonoBehaviour
         _animator.SetBool("isMoving", false);
         _animator.SetBool("isAttacking", true);
 
+        // ToDo : 대미지 받았을 때 HP바의 영역이 업데이트되도록 수정
         _player.TakeDamage(_damage);
+        _hpBarSlider.value = _HP;
 
         StartCoroutine("PlayEffect");
         _attackDelay = 0;
@@ -151,5 +168,16 @@ public class Enemy : MonoBehaviour
     bool CheckAnimationState()
     {
         return _animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= _waitSec;
+    }
+
+    void SetHPBar()
+    {
+        _hpBarCanvas = GameObject.Find("Canvas").GetComponent<Canvas>();
+        GameObject hpBar = Instantiate<GameObject>(_hpBarPrefab, _hpBarCanvas.transform);
+        _hpBarObj = hpBar;
+
+        var bar = hpBar.GetComponent<UIHPBar>();
+        bar._enemyTransform = this.gameObject.transform;
+        bar._offset = _hpBarOffset;
     }
 }
