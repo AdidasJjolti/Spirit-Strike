@@ -361,9 +361,8 @@ MonoBehaviour:
   _atkEffect: {fileID: 2374644240883026974}
   _waitSec: 0.19
   _hpBarPrefab: {fileID: 4075485195887041563, guid: f4466f219c07d994fa433c204f1b20bc, type: 3}
-  _hpBarOffset: {x: -0.5, y: 2.4, z: 0}
   _hpBarCanvas: {fileID: 0}
-  _hpBarSlider: {fileID: 711699608707245862, guid: f4466f219c07d994fa433c204f1b20bc, type: 3}
+  _hpBarSlider: {fileID: 0}
 --- !u!4 &796652407307068396 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 46f311046d2104da8b56be3d0a49a119, type: 3}

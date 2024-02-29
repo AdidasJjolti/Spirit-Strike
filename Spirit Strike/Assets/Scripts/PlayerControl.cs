@@ -32,10 +32,11 @@ public class PlayerControl : MonoBehaviour
 
     [SerializeField] PlayerData _data;
     [SerializeField] PlayerExperienceData _expData;
-    [SerializeField] int _curExp = 0;
 
     [SerializeField] LayerMask _targetLayer;
     [SerializeField] ObjectManager _objManager;
+
+    PlayerLevel _playerLevel;
 
     void Awake()
     {
@@ -51,6 +52,9 @@ public class PlayerControl : MonoBehaviour
         _data = new PlayerData();
         _expData = new PlayerExperienceData();
 
+        _playerLevel = new PlayerLevel();
+
+        // ToDo : PlayerLevel에서 레벨업 관련 데이터를 가져오도록 수정
         LoadPlayerExperienceDataFromJson();
         LoadPlayerDataFromJson();
     }
@@ -253,6 +257,7 @@ public class PlayerControl : MonoBehaviour
         UnityEngine.Debug.Log($"현재 레벨은 1이고 공격력은 {_data._attack}");
     }
 
+    // ToDo : PlayerLevel에서 레벨업 관련 데이터를 가져오도록 수정
     void LoadPlayerExperienceDataFromJson()
     {
         string JsonString = File.ReadAllText(Application.dataPath + "/Resources/PlayerExperienceData.json");
@@ -270,8 +275,11 @@ public class PlayerControl : MonoBehaviour
         UnityEngine.Debug.Log($"현재 레벨은 1이고 필요 경험치는 {_expData._exp}");
     }
 
+    // ToDo : PlayerLevel을 통해서 레벨업 관련 데이터를 모두 처리하는 방식으로 코드 수정
+    // ToDo : PlayerControl에서는 이동, 공격 등 움직임에 관련한 것들만 하도록 코드 리뉴얼 예정
     public void GetExp()
     {
-        _curExp += 10;
+        _playerLevel.CurExp += 10;
+        UnityEngine.Debug.Log($"현재 경험치는 {_playerLevel.CurExp}이야.");
     }
 }

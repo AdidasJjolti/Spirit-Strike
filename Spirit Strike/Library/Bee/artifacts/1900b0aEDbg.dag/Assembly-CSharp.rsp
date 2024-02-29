@@ -387,6 +387,7 @@
 "Assets/Scripts/PlayerControl.cs"
 "Assets/Scripts/PlayerData.cs"
 "Assets/Scripts/PlayerExperienceData.cs"
+"Assets/Scripts/PlayerLevel.cs"
 "Assets/Scripts/Singleton.cs"
 "Assets/Scripts/SpawnEnemy.cs"
 "Assets/Scripts/UIHPBar.cs"

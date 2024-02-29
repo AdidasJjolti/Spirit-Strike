@@ -7,8 +7,8 @@ using UnityEngine.UI;
 
 public class Enemy : MonoBehaviour
 {
-    [SerializeField] int _MaxHP = 50;
-    [SerializeField] int _HP = 50;
+    [SerializeField] int _MaxHP = 20;
+    [SerializeField] int _HP = 20;
     [SerializeField] PlayerControl _player;   // 공격 목표물로 사용할 플레이어 위치 저장
     NavMeshAgent _agent;
     Rigidbody _rigid;
@@ -20,11 +20,11 @@ public class Enemy : MonoBehaviour
     [SerializeField] ParticleSystem _atkEffect;
     [SerializeField] float _waitSec;
 
-    [SerializeField] GameObject _hpBarPrefab;
-    [SerializeField] Vector3 _hpBarOffset = new Vector3(-0.5f, 2.4f, 0);
-    [SerializeField] Canvas _hpBarCanvas;
-    [SerializeField] Slider _hpBarSlider;
-    GameObject _hpBarObj;
+    [SerializeField] GameObject _hpBarPrefab;   // HP바 프리팹
+    [SerializeField] Canvas _hpBarCanvas;       // HP바가 생성될 캔버스
+    [SerializeField] Slider _hpBarSlider;       // HP바가 가진 슬라이더 컴포넌트
+    GameObject _hpBarObj;                       // 적 생성될 때 함께 생성한 HP바 게임오브젝트
+    UIHPBar _hpBar;                             // 대미지를 입을 때 슬라이더 값을 변경할 함수 연결용 변수
 
     public int HP
     {
@@ -34,18 +34,6 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    void OnEnable()
-    {
-        if(_player == null)
-        {
-            _player = FindObjectOfType<PlayerControl>();
-        }
-
-        _hpBarSlider.gameObject.SetActive(true);
-        _hpBarSlider.maxValue = _MaxHP;
-        _hpBarSlider.value = _MaxHP;
-    }
-
     void Awake()
     {
         _agent = GetComponent<NavMeshAgent>();
@@ -53,6 +41,16 @@ public class Enemy : MonoBehaviour
         _animator = GetComponent<Animator>();
 
         SetHPBar();
+    }
+
+    void OnEnable()
+    {
+        if (_player == null)
+        {
+            _player = FindObjectOfType<PlayerControl>();
+        }
+
+        _hpBarSlider.gameObject.SetActive(true);
     }
 
     void Update()
@@ -95,10 +93,10 @@ public class Enemy : MonoBehaviour
     public void TakeDamage(int damage)
     {
         _HP -= damage;
+        _hpBar.ChangeValue(HP);
         //Debug.Log($"현재 체력은 : {_HP}");
 
-
-        if(_HP <= 0)
+        if (_HP <= 0)
         {
             StartCoroutine("Die");
         }
@@ -107,9 +105,8 @@ public class Enemy : MonoBehaviour
     IEnumerator Die()
     {
         _animator.SetTrigger("Die");
-        yield return new WaitForSecondsRealtime(1.0f);
-        //gameObject.SetActive(false);
         Destroy(_hpBarObj);
+        yield return new WaitForSecondsRealtime(1.0f);
         Destroy(this.gameObject);
         yield return null;
     }
@@ -145,9 +142,7 @@ public class Enemy : MonoBehaviour
         _animator.SetBool("isMoving", false);
         _animator.SetBool("isAttacking", true);
 
-        // ToDo : 대미지 받았을 때 HP바의 영역이 업데이트되도록 수정
         _player.TakeDamage(_damage);
-        _hpBarSlider.value = _HP;
 
         StartCoroutine("PlayEffect");
         _attackDelay = 0;
@@ -176,8 +171,12 @@ public class Enemy : MonoBehaviour
         GameObject hpBar = Instantiate<GameObject>(_hpBarPrefab, _hpBarCanvas.transform);
         _hpBarObj = hpBar;
 
+        _hpBarSlider = hpBar.GetComponent<Slider>();
+        _hpBarSlider.maxValue = _MaxHP;
+        _hpBarSlider.value = _MaxHP;
+
         var bar = hpBar.GetComponent<UIHPBar>();
         bar._enemyTransform = this.gameObject.transform;
-        bar._offset = _hpBarOffset;
+        _hpBar = bar;
     }
 }
