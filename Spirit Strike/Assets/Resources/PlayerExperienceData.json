@@ -1,402 +1,502 @@
 [
  {
-  "level": 1,
-  "exp": 10
+  "Level": 1,
+  "Exp": 10,
+  "AccExp": 10
  },
  {
-  "level": 2,
-  "exp": 20
+  "Level": 2,
+  "Exp": 20,
+  "AccExp": 30
  },
  {
-  "level": 3,
-  "exp": 30
+  "Level": 3,
+  "Exp": 30,
+  "AccExp": 60
  },
  {
-  "level": 4,
-  "exp": 50
+  "Level": 4,
+  "Exp": 50,
+  "AccExp": 110
  },
  {
-  "level": 5,
-  "exp": 70
+  "Level": 5,
+  "Exp": 70,
+  "AccExp": 180
  },
  {
-  "level": 6,
-  "exp": 100
+  "Level": 6,
+  "Exp": 100,
+  "AccExp": 280
  },
  {
-  "level": 7,
-  "exp": 130
+  "Level": 7,
+  "Exp": 130,
+  "AccExp": 410
  },
  {
-  "level": 8,
-  "exp": 160
+  "Level": 8,
+  "Exp": 160,
+  "AccExp": 570
  },
  {
-  "level": 9,
-  "exp": 200
+  "Level": 9,
+  "Exp": 200,
+  "AccExp": 770
  },
  {
-  "level": 10,
-  "exp": 240
+  "Level": 10,
+  "Exp": 240,
+  "AccExp": 1010
  },
  {
-  "level": 11,
-  "exp": 280
+  "Level": 11,
+  "Exp": 280,
+  "AccExp": 1290
  },
  {
-  "level": 12,
-  "exp": 320
+  "Level": 12,
+  "Exp": 320,
+  "AccExp": 1610
  },
  {
-  "level": 13,
-  "exp": 360
+  "Level": 13,
+  "Exp": 360,
+  "AccExp": 1970
  },
  {
-  "level": 14,
-  "exp": 400
+  "Level": 14,
+  "Exp": 400,
+  "AccExp": 2370
  },
  {
-  "level": 15,
-  "exp": 450
+  "Level": 15,
+  "Exp": 450,
+  "AccExp": 2820
  },
  {
-  "level": 16,
-  "exp": 500
+  "Level": 16,
+  "Exp": 500,
+  "AccExp": 3320
  },
  {
-  "level": 17,
-  "exp": 550
+  "Level": 17,
+  "Exp": 550,
+  "AccExp": 3870
  },
  {
-  "level": 18,
-  "exp": 600
+  "Level": 18,
+  "Exp": 600,
+  "AccExp": 4470
  },
  {
-  "level": 19,
-  "exp": 650
+  "Level": 19,
+  "Exp": 650,
+  "AccExp": 5120
  },
  {
-  "level": 20,
-  "exp": 700
+  "Level": 20,
+  "Exp": 700,
+  "AccExp": 5820
  },
  {
-  "level": 21,
-  "exp": 800
+  "Level": 21,
+  "Exp": 800,
+  "AccExp": 6620
  },
  {
-  "level": 22,
-  "exp": 900
+  "Level": 22,
+  "Exp": 900,
+  "AccExp": 7520
  },
  {
-  "level": 23,
-  "exp": 1000
+  "Level": 23,
+  "Exp": 1000,
+  "AccExp": 8520
  },
  {
-  "level": 24,
-  "exp": 1200
+  "Level": 24,
+  "Exp": 1200,
+  "AccExp": 9720
  },
  {
-  "level": 25,
-  "exp": 1400
+  "Level": 25,
+  "Exp": 1400,
+  "AccExp": 11120
  },
  {
-  "level": 26,
-  "exp": 1600
+  "Level": 26,
+  "Exp": 1600,
+  "AccExp": 12720
  },
  {
-  "level": 27,
-  "exp": 1800
+  "Level": 27,
+  "Exp": 1800,
+  "AccExp": 14520
  },
  {
-  "level": 28,
-  "exp": 2000
+  "Level": 28,
+  "Exp": 2000,
+  "AccExp": 16520
  },
  {
-  "level": 29,
-  "exp": 2500
+  "Level": 29,
+  "Exp": 2500,
+  "AccExp": 19020
  },
  {
-  "level": 30,
-  "exp": 3000
+  "Level": 30,
+  "Exp": 3000,
+  "AccExp": 22020
  },
  {
-  "level": 31,
-  "exp": 3500
+  "Level": 31,
+  "Exp": 3500,
+  "AccExp": 25520
  },
  {
-  "level": 32,
-  "exp": 4000
+  "Level": 32,
+  "Exp": 4000,
+  "AccExp": 29520
  },
  {
-  "level": 33,
-  "exp": 4500
+  "Level": 33,
+  "Exp": 4500,
+  "AccExp": 34020
  },
  {
-  "level": 34,
-  "exp": 5000
+  "Level": 34,
+  "Exp": 5000,
+  "AccExp": 39020
  },
  {
-  "level": 35,
-  "exp": 6000
+  "Level": 35,
+  "Exp": 6000,
+  "AccExp": 45020
  },
  {
-  "level": 36,
-  "exp": 7000
+  "Level": 36,
+  "Exp": 7000,
+  "AccExp": 52020
  },
  {
-  "level": 37,
-  "exp": 8000
+  "Level": 37,
+  "Exp": 8000,
+  "AccExp": 60020
  },
  {
-  "level": 38,
-  "exp": 9000
+  "Level": 38,
+  "Exp": 9000,
+  "AccExp": 69020
  },
  {
-  "level": 39,
-  "exp": 10000
+  "Level": 39,
+  "Exp": 10000,
+  "AccExp": 79020
  },
  {
-  "level": 40,
-  "exp": 11000
+  "Level": 40,
+  "Exp": 11000,
+  "AccExp": 90020
  },
  {
-  "level": 41,
-  "exp": 12000
+  "Level": 41,
+  "Exp": 12000,
+  "AccExp": 102020
  },
  {
-  "level": 42,
-  "exp": 13000
+  "Level": 42,
+  "Exp": 13000,
+  "AccExp": 115020
  },
  {
-  "level": 43,
-  "exp": 15000
+  "Level": 43,
+  "Exp": 15000,
+  "AccExp": 130020
  },
  {
-  "level": 44,
-  "exp": 17000
+  "Level": 44,
+  "Exp": 17000,
+  "AccExp": 147020
  },
  {
-  "level": 45,
-  "exp": 19000
+  "Level": 45,
+  "Exp": 19000,
+  "AccExp": 166020
  },
  {
-  "level": 46,
-  "exp": 21000
+  "Level": 46,
+  "Exp": 21000,
+  "AccExp": 187020
  },
  {
-  "level": 47,
-  "exp": 23000
+  "Level": 47,
+  "Exp": 23000,
+  "AccExp": 210020
  },
  {
-  "level": 48,
-  "exp": 25000
+  "Level": 48,
+  "Exp": 25000,
+  "AccExp": 235020
  },
  {
-  "level": 49,
-  "exp": 27000
+  "Level": 49,
+  "Exp": 27000,
+  "AccExp": 262020
  },
  {
-  "level": 50,
-  "exp": 30000
+  "Level": 50,
+  "Exp": 30000,
+  "AccExp": 292020
  },
  {
-  "level": 51,
-  "exp": 35000
+  "Level": 51,
+  "Exp": 35000,
+  "AccExp": 327020
  },
  {
-  "level": 52,
-  "exp": 40000
+  "Level": 52,
+  "Exp": 40000,
+  "AccExp": 367020
  },
  {
-  "level": 53,
-  "exp": 45000
+  "Level": 53,
+  "Exp": 45000,
+  "AccExp": 412020
  },
  {
-  "level": 54,
-  "exp": 50000
+  "Level": 54,
+  "Exp": 50000,
+  "AccExp": 462020
  },
  {
-  "level": 55,
-  "exp": 55000
+  "Level": 55,
+  "Exp": 55000,
+  "AccExp": 517020
  },
  {
-  "level": 56,
-  "exp": 60000
+  "Level": 56,
+  "Exp": 60000,
+  "AccExp": 577020
  },
  {
-  "level": 57,
-  "exp": 70000
+  "Level": 57,
+  "Exp": 70000,
+  "AccExp": 647020
  },
  {
-  "level": 58,
-  "exp": 80000
+  "Level": 58,
+  "Exp": 80000,
+  "AccExp": 727020
  },
  {
-  "level": 59,
-  "exp": 90000
+  "Level": 59,
+  "Exp": 90000,
+  "AccExp": 817020
  },
  {
-  "level": 60,
-  "exp": 100000
+  "Level": 60,
+  "Exp": 100000,
+  "AccExp": 917020
  },
  {
-  "level": 61,
-  "exp": 110000
+  "Level": 61,
+  "Exp": 110000,
+  "AccExp": 1027020
  },
  {
-  "level": 62,
-  "exp": 120000
+  "Level": 62,
+  "Exp": 120000,
+  "AccExp": 1147020
  },
  {
-  "level": 63,
-  "exp": 130000
+  "Level": 63,
+  "Exp": 130000,
+  "AccExp": 1277020
  },
  {
-  "level": 64,
-  "exp": 140000
+  "Level": 64,
+  "Exp": 140000,
+  "AccExp": 1417020
  },
  {
-  "level": 65,
-  "exp": 150000
+  "Level": 65,
+  "Exp": 150000,
+  "AccExp": 1567020
  },
  {
-  "level": 66,
-  "exp": 180000
+  "Level": 66,
+  "Exp": 180000,
+  "AccExp": 1747020
  },
  {
-  "level": 67,
-  "exp": 210000
+  "Level": 67,
+  "Exp": 210000,
+  "AccExp": 1957020
  },
  {
-  "level": 68,
-  "exp": 240000
+  "Level": 68,
+  "Exp": 240000,
+  "AccExp": 2197020
  },
  {
-  "level": 69,
-  "exp": 270000
+  "Level": 69,
+  "Exp": 270000,
+  "AccExp": 2467020
  },
  {
-  "level": 70,
-  "exp": 300000
+  "Level": 70,
+  "Exp": 300000,
+  "AccExp": 2767020
  },
  {
-  "level": 71,
-  "exp": 350000
+  "Level": 71,
+  "Exp": 350000,
+  "AccExp": 3117020
  },
  {
-  "level": 72,
-  "exp": 400000
+  "Level": 72,
+  "Exp": 400000,
+  "AccExp": 3517020
  },
  {
-  "level": 73,
-  "exp": 450000
+  "Level": 73,
+  "Exp": 450000,
+  "AccExp": 3967020
  },
  {
-  "level": 74,
-  "exp": 500000
+  "Level": 74,
+  "Exp": 500000,
+  "AccExp": 4467020
  },
  {
-  "level": 75,
-  "exp": 550000
+  "Level": 75,
+  "Exp": 550000,
+  "AccExp": 5017020
  },
  {
-  "level": 76,
-  "exp": 600000
+  "Level": 76,
+  "Exp": 600000,
+  "AccExp": 5617020
  },
  {
-  "level": 77,
-  "exp": 650000
+  "Level": 77,
+  "Exp": 650000,
+  "AccExp": 6267020
  },
  {
-  "level": 78,
-  "exp": 700000
+  "Level": 78,
+  "Exp": 700000,
+  "AccExp": 6967020
  },
  {
-  "level": 79,
-  "exp": 750000
+  "Level": 79,
+  "Exp": 750000,
+  "AccExp": 7717020
  },
  {
-  "level": 80,
-  "exp": 800000
+  "Level": 80,
+  "Exp": 800000,
+  "AccExp": 8517020
  },
  {
-  "level": 81,
-  "exp": 850000
+  "Level": 81,
+  "Exp": 850000,
+  "AccExp": 9367020
  },
  {
-  "level": 82,
-  "exp": 900000
+  "Level": 82,
+  "Exp": 900000,
+  "AccExp": 10267020
  },
  {
-  "level": 83,
-  "exp": 950000
+  "Level": 83,
+  "Exp": 950000,
+  "AccExp": 11217020
  },
  {
-  "level": 84,
-  "exp": 1000000
+  "Level": 84,
+  "Exp": 1000000,
+  "AccExp": 12217020
  },
  {
-  "level": 85,
-  "exp": 1100000
+  "Level": 85,
+  "Exp": 1100000,
+  "AccExp": 13317020
  },
  {
-  "level": 86,
-  "exp": 1200000
+  "Level": 86,
+  "Exp": 1200000,
+  "AccExp": 14517020
  },
  {
-  "level": 87,
-  "exp": 1300000
+  "Level": 87,
+  "Exp": 1300000,
+  "AccExp": 15817020
  },
  {
-  "level": 88,
-  "exp": 1400000
+  "Level": 88,
+  "Exp": 1400000,
+  "AccExp": 17217020
  },
  {
-  "level": 89,
-  "exp": 1500000
+  "Level": 89,
+  "Exp": 1500000,
+  "AccExp": 18717020
  },
  {
-  "level": 90,
-  "exp": 1600000
+  "Level": 90,
+  "Exp": 1600000,
+  "AccExp": 20317020
  },
  {
-  "level": 91,
-  "exp": 1700000
+  "Level": 91,
+  "Exp": 1700000,
+  "AccExp": 22017020
  },
  {
-  "level": 92,
-  "exp": 1800000
+  "Level": 92,
+  "Exp": 1800000,
+  "AccExp": 23817020
  },
  {
-  "level": 93,
-  "exp": 1900000
+  "Level": 93,
+  "Exp": 1900000,
+  "AccExp": 25717020
  },
  {
-  "level": 94,
-  "exp": 2000000
+  "Level": 94,
+  "Exp": 2000000,
+  "AccExp": 27717020
  },
  {
-  "level": 95,
-  "exp": 2100000
+  "Level": 95,
+  "Exp": 2100000,
+  "AccExp": 29817020
  },
  {
-  "level": 96,
-  "exp": 2200000
+  "Level": 96,
+  "Exp": 2200000,
+  "AccExp": 32017020
  },
  {
-  "level": 97,
-  "exp": 2300000
+  "Level": 97,
+  "Exp": 2300000,
+  "AccExp": 34317020
  },
  {
-  "level": 98,
-  "exp": 2400000
+  "Level": 98,
+  "Exp": 2400000,
+  "AccExp": 36717020
  },
  {
-  "level": 99,
-  "exp": 2500000
+  "Level": 99,
+  "Exp": 2500000,
+  "AccExp": 39217020
  },
  {
-  "level": 100,
-  "exp": 2600000
+  "Level": 100,
+  "Exp": 2600000,
+  "AccExp": 41817020
  }
 ]

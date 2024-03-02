@@ -36,8 +36,6 @@ public class PlayerControl : MonoBehaviour
     [SerializeField] LayerMask _targetLayer;
     [SerializeField] ObjectManager _objManager;
 
-    PlayerLevel _playerLevel;
-
     void Awake()
     {
         _rigid = GetComponent<Rigidbody>();
@@ -52,10 +50,9 @@ public class PlayerControl : MonoBehaviour
         _data = new PlayerData();
         _expData = new PlayerExperienceData();
 
-        _playerLevel = new PlayerLevel();
-
         // ToDo : PlayerLevel에서 레벨업 관련 데이터를 가져오도록 수정
-        LoadPlayerExperienceDataFromJson();
+        //LoadPlayerExperienceDataFromJson();
+
         LoadPlayerDataFromJson();
     }
 
@@ -150,9 +147,9 @@ public class PlayerControl : MonoBehaviour
                 // 타겟 몬스터가 죽으면 다음 타겟을 설정하기 위해 null로 변경 후 다음 타켓 몬스터 탐색
                 if(_targetEnemy.HP <= 0)
                 {
-                    GetExp();
+                    // 임시로 몬스터 처치 시 20만큼 경험치 획득
+                    _expData.GetExp(20);
                     _targetEnemy = null;
-                    //Debug.Log("타겟 몬스터 해제");
                 }
             }
         }
@@ -240,7 +237,7 @@ public class PlayerControl : MonoBehaviour
     {
         string JsonString = File.ReadAllText(Application.dataPath + "/Resources/PlayerData.json");
         JsonData jsonData = JsonMapper.ToObject(JsonString);
-        ParsingJsonQuest(jsonData, _expData._level);
+        ParsingJsonQuest(jsonData, _expData.Level);
     }
 
     // json 파일로부터 플레이어 레벨에 맞는 데이터 가져오기
@@ -258,28 +255,21 @@ public class PlayerControl : MonoBehaviour
     }
 
     // ToDo : PlayerLevel에서 레벨업 관련 데이터를 가져오도록 수정
-    void LoadPlayerExperienceDataFromJson()
-    {
-        string JsonString = File.ReadAllText(Application.dataPath + "/Resources/PlayerExperienceData.json");
-        JsonData jsonData = JsonMapper.ToObject(JsonString);
-        ParsingExpJsonQuest(jsonData);
-    }
+    //void LoadPlayerExperienceDataFromJson()
+    //{
+    //    string JsonString = File.ReadAllText(Application.dataPath + "/Resources/PlayerExperienceData.json");
+    //    JsonData jsonData = JsonMapper.ToObject(JsonString);
+    //    ParsingExpJsonQuest(jsonData);
+    //}
 
     // json 파일로부터 플레이어 레벨에 맞는 데이터 가져오기
-    void ParsingExpJsonQuest(JsonData data)
-    {
-        _expData._level = (int)data[0]["level"];
-        _expData._exp = (int)data[0]["exp"];
+    //void ParsingExpJsonQuest(JsonData data)
+    //{
+    //    _expData.Level = (int)data[0]["level"];
+    //    _expData.Exp = (int)data[0]["exp"];
+    //    UnityEngine.Debug.Log($"현재 레벨은 1이고 필요 경험치는 {_expData.Exp}");
+    //}
 
 
-        UnityEngine.Debug.Log($"현재 레벨은 1이고 필요 경험치는 {_expData._exp}");
-    }
-
-    // ToDo : PlayerLevel을 통해서 레벨업 관련 데이터를 모두 처리하는 방식으로 코드 수정
     // ToDo : PlayerControl에서는 이동, 공격 등 움직임에 관련한 것들만 하도록 코드 리뉴얼 예정
-    public void GetExp()
-    {
-        _playerLevel.CurExp += 10;
-        UnityEngine.Debug.Log($"현재 경험치는 {_playerLevel.CurExp}이야.");
-    }
 }
