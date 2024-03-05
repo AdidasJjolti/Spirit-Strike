@@ -80,23 +80,17 @@ public class PlayerExperienceData
 
     public PlayerExperienceData()
     {
-        _level = 1;
-        _exp = 0;
-        _accExp = 0;
-        _curExp = 0;
-        _prevExp = 0;
-
-        //Level = 1;
-        //Exp = 0;
-        //AccExp = 0;
-        //CurExp = 0;
-        //PrevExp = 0;
+        Level = 1;
+        Exp = 0;
+        AccExp = 0;
+        CurExp = 0;
+        PrevExp = 0;
 
         LoadPlayerExperienceDataFromJson();
         Debug.Log("경험치 클래스 생성 완료!");
     }
 
-    // ToDo : PlayerLevel을 통해서 레벨업 관련 데이터를 모두 처리하는 방식으로 코드 수정
+    // PlayerLevel을 통해서 레벨업 관련 데이터를 모두 처리하는 방식으로 코드 수정
     public void GetExp(int exp)
     {
         _curExp += exp;
@@ -121,15 +115,7 @@ public class PlayerExperienceData
         string JsonString = File.ReadAllText(Application.dataPath + "/Resources/PlayerExperienceData.json");
         JsonData jsonData = JsonMapper.ToObject(JsonString);
         _data = jsonData;
-        //ParsingExpJsonQuest(_data, _level);
         _exp = (int)_data[_level - 1]["Exp"];
         Debug.Log($"현재 레벨은 {_level}이고 현재 경험치는 {_curExp}이고 필요 경험치는 {_exp}야.");
     }
-
-    // Json 데이터에서 필요 누적 경험치 불러오기
-    //void ParsingExpJsonQuest(JsonData data, int level)
-    //{
-    //    _exp = (int)data[level - 1]["exp"];
-    //    Debug.Log($"현재 레벨은 {level}이고 필요 경험치는 {_exp}");
-    //}
 }

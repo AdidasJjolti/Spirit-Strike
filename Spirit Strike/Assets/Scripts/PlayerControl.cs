@@ -52,8 +52,7 @@ public class PlayerControl : MonoBehaviour
 
         // ToDo : PlayerLevel에서 레벨업 관련 데이터를 가져오도록 수정
         //LoadPlayerExperienceDataFromJson();
-
-        LoadPlayerDataFromJson();
+        //LoadPlayerDataFromJson();
     }
 
     void Update()
@@ -142,7 +141,7 @@ public class PlayerControl : MonoBehaviour
         {
             if (hit.collider.GetComponent<Enemy>() == _targetEnemy)
             {
-                _targetEnemy.TakeDamage(_data._attack);
+                _targetEnemy.TakeDamage(_data.Attack);
 
                 // 타겟 몬스터가 죽으면 다음 타겟을 설정하기 위해 null로 변경 후 다음 타켓 몬스터 탐색
                 if(_targetEnemy.HP <= 0)
@@ -228,31 +227,31 @@ public class PlayerControl : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        _data._hp -= damage;
+        _data.Hp -= damage;
         //Debug.Log($"아얏! {_hp}");
     }
 
 
-    void LoadPlayerDataFromJson()
-    {
-        string JsonString = File.ReadAllText(Application.dataPath + "/Resources/PlayerData.json");
-        JsonData jsonData = JsonMapper.ToObject(JsonString);
-        ParsingJsonQuest(jsonData, _expData.Level);
-    }
+    //void LoadPlayerDataFromJson()
+    //{
+    //    string JsonString = File.ReadAllText(Application.dataPath + "/Resources/PlayerData.json");
+    //    JsonData jsonData = JsonMapper.ToObject(JsonString);
+    //    ParsingJsonQuest(jsonData, _expData.Level);
+    //}
 
     // json 파일로부터 플레이어 레벨에 맞는 데이터 가져오기
-    void ParsingJsonQuest(JsonData data, int level)
-    {
-        _data._level = (int)data[level - 1]["level"];
-        _data._hp = (int)data[level - 1]["hp"];
-        _data._attack = (int)data[level - 1]["attack"];
-        _data._defence = (int)data[level - 1]["defence"];
-        _data._dodge = (int)data[level - 1]["dodge"];
-        _data._critical = (int)data[level - 1]["critical"];
-        _data._atkSpeed = (int)data[level - 1]["atk_speed"];
+    //void ParsingJsonQuest(JsonData data, int level)
+    //{
+    //    _data._level = (int)data[level - 1]["level"];
+    //    _data._hp = (int)data[level - 1]["hp"];
+    //    _data._attack = (int)data[level - 1]["attack"];
+    //    _data._defence = (int)data[level - 1]["defence"];
+    //    _data._dodge = (int)data[level - 1]["dodge"];
+    //    _data._critical = (int)data[level - 1]["critical"];
+    //    _data._atkSpeed = (int)data[level - 1]["atk_speed"];
 
-        UnityEngine.Debug.Log($"현재 레벨은 1이고 공격력은 {_data._attack}");
-    }
+    //    UnityEngine.Debug.Log($"현재 레벨은 1이고 공격력은 {_data._attack}");
+    //}
 
     // ToDo : PlayerLevel에서 레벨업 관련 데이터를 가져오도록 수정
     //void LoadPlayerExperienceDataFromJson()
