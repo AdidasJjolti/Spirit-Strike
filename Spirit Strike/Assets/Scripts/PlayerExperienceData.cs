@@ -90,7 +90,7 @@ public class PlayerExperienceData
         Debug.Log("경험치 클래스 생성 완료!");
     }
 
-    // PlayerLevel을 통해서 레벨업 관련 데이터를 모두 처리하는 방식으로 코드 수정
+    // PlayerDataManager을 통해서 레벨업 관련 데이터를 모두 처리하는 방식으로 코드 수정
     public void GetExp(int exp)
     {
         _curExp += exp;

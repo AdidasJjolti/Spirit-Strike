@@ -24,17 +24,18 @@ public class PlayerControl : MonoBehaviour
     Animator _animator;
     NavMeshAgent _agent;
 
-    [SerializeField] float _attackSpeed = 1.0f;
+    [SerializeField] float _attackSpeed;
     [SerializeField] float _attackDelay = 1.0f;
     [SerializeField] Enemy _targetEnemy;
 
     [SerializeField] float _rayDistance = 1.5f;
 
-    [SerializeField] PlayerData _data;
-    [SerializeField] PlayerExperienceData _expData;
+    //[SerializeField] PlayerData _data;
+    //[SerializeField] PlayerExperienceData _expData;
 
     [SerializeField] LayerMask _targetLayer;
     [SerializeField] ObjectManager _objManager;
+    [SerializeField] PlayerDataManager _dataManager;
 
     void Awake()
     {
@@ -47,8 +48,10 @@ public class PlayerControl : MonoBehaviour
         _agent = GetComponent<NavMeshAgent>();
         _agent.speed = _moveSpeed;
 
-        _data = new PlayerData();
-        _expData = new PlayerExperienceData();
+        _attackSpeed = (float)100 / _dataManager.AtkSpeed;
+
+        //_data = new PlayerData();
+        //_expData = new PlayerExperienceData();
 
         // ToDo : PlayerLevel에서 레벨업 관련 데이터를 가져오도록 수정
         //LoadPlayerExperienceDataFromJson();
@@ -119,10 +122,12 @@ public class PlayerControl : MonoBehaviour
 
     void Attack()
     {
-        if (_attackDelay < _attackSpeed)
+        if (_attackDelay < (float)100/_dataManager.AtkSpeed)
         {
             return;
         }
+
+        UnityEngine.Debug.Log($"공격 속도는 {(float)100 / _dataManager.AtkSpeed}이야.");
 
         transform.LookAt(_targetEnemy.transform);
 
@@ -141,13 +146,13 @@ public class PlayerControl : MonoBehaviour
         {
             if (hit.collider.GetComponent<Enemy>() == _targetEnemy)
             {
-                _targetEnemy.TakeDamage(_data.Attack);
+                _targetEnemy.TakeDamage(_dataManager.Attack);
 
                 // 타겟 몬스터가 죽으면 다음 타겟을 설정하기 위해 null로 변경 후 다음 타켓 몬스터 탐색
                 if(_targetEnemy.HP <= 0)
                 {
                     // 임시로 몬스터 처치 시 20만큼 경험치 획득
-                    _expData.GetExp(20);
+                    _dataManager.GetExp(20);
                     _targetEnemy = null;
                 }
             }
@@ -227,48 +232,8 @@ public class PlayerControl : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        _data.Hp -= damage;
+        _dataManager.Hp -= damage;
         //Debug.Log($"아얏! {_hp}");
     }
-
-
-    //void LoadPlayerDataFromJson()
-    //{
-    //    string JsonString = File.ReadAllText(Application.dataPath + "/Resources/PlayerData.json");
-    //    JsonData jsonData = JsonMapper.ToObject(JsonString);
-    //    ParsingJsonQuest(jsonData, _expData.Level);
-    //}
-
-    // json 파일로부터 플레이어 레벨에 맞는 데이터 가져오기
-    //void ParsingJsonQuest(JsonData data, int level)
-    //{
-    //    _data._level = (int)data[level - 1]["level"];
-    //    _data._hp = (int)data[level - 1]["hp"];
-    //    _data._attack = (int)data[level - 1]["attack"];
-    //    _data._defence = (int)data[level - 1]["defence"];
-    //    _data._dodge = (int)data[level - 1]["dodge"];
-    //    _data._critical = (int)data[level - 1]["critical"];
-    //    _data._atkSpeed = (int)data[level - 1]["atk_speed"];
-
-    //    UnityEngine.Debug.Log($"현재 레벨은 1이고 공격력은 {_data._attack}");
-    //}
-
-    // ToDo : PlayerLevel에서 레벨업 관련 데이터를 가져오도록 수정
-    //void LoadPlayerExperienceDataFromJson()
-    //{
-    //    string JsonString = File.ReadAllText(Application.dataPath + "/Resources/PlayerExperienceData.json");
-    //    JsonData jsonData = JsonMapper.ToObject(JsonString);
-    //    ParsingExpJsonQuest(jsonData);
-    //}
-
-    // json 파일로부터 플레이어 레벨에 맞는 데이터 가져오기
-    //void ParsingExpJsonQuest(JsonData data)
-    //{
-    //    _expData.Level = (int)data[0]["level"];
-    //    _expData.Exp = (int)data[0]["exp"];
-    //    UnityEngine.Debug.Log($"현재 레벨은 1이고 필요 경험치는 {_expData.Exp}");
-    //}
-
-
     // ToDo : PlayerControl에서는 이동, 공격 등 움직임에 관련한 것들만 하도록 코드 리뉴얼 예정
 }
