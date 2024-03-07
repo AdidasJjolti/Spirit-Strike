@@ -28,10 +28,17 @@ public class PlayerControl : MonoBehaviour
     [SerializeField] float _attackDelay = 1.0f;
     [SerializeField] Enemy _targetEnemy;
 
-    [SerializeField] float _rayDistance = 1.5f;
+    public Enemy TargetEnemy
+    {
+        get
+        {
+            return _targetEnemy;
+        }
+    }
 
-    //[SerializeField] PlayerData _data;
-    //[SerializeField] PlayerExperienceData _expData;
+    [SerializeField] GameObject _firePrefab;
+
+    [SerializeField] float _rayDistance = 1.5;
 
     [SerializeField] LayerMask _targetLayer;
     [SerializeField] ObjectManager _objManager;
@@ -49,13 +56,6 @@ public class PlayerControl : MonoBehaviour
         _agent.speed = _moveSpeed;
 
         _attackSpeed = (float)100 / _dataManager.AtkSpeed;
-
-        //_data = new PlayerData();
-        //_expData = new PlayerExperienceData();
-
-        // ToDo : PlayerLevel에서 레벨업 관련 데이터를 가져오도록 수정
-        //LoadPlayerExperienceDataFromJson();
-        //LoadPlayerDataFromJson();
     }
 
     void Update()
@@ -146,6 +146,7 @@ public class PlayerControl : MonoBehaviour
         {
             if (hit.collider.GetComponent<Enemy>() == _targetEnemy)
             {
+                Instantiate(_firePrefab, transform);
                 _targetEnemy.TakeDamage(_dataManager.Attack);
 
                 // 타겟 몬스터가 죽으면 다음 타겟을 설정하기 위해 null로 변경 후 다음 타켓 몬스터 탐색
