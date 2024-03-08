@@ -17,10 +17,6 @@ public class PlayerControl : MonoBehaviour
     Vector3 _moveDir;
     float _moveSpeed = 3.0f;
 
-    //[SerializeField] int _hp = 10;
-    //[SerializeField] int _level = 1;
-    //[SerializeField] int _attack;
-
     Animator _animator;
     NavMeshAgent _agent;
 
@@ -38,11 +34,13 @@ public class PlayerControl : MonoBehaviour
 
     [SerializeField] GameObject _firePrefab;
 
-    [SerializeField] float _rayDistance = 1.5;
+    [SerializeField] float _rayDistance = 1.5f;
 
     [SerializeField] LayerMask _targetLayer;
     [SerializeField] ObjectManager _objManager;
     [SerializeField] PlayerDataManager _dataManager;
+
+    [SerializeField] bool _isSkillReady;
 
     void Awake()
     {
@@ -74,7 +72,12 @@ public class PlayerControl : MonoBehaviour
         }
         else
         {
-            if (Vector3.Distance(transform.position, _targetEnemy.transform.position) <= 1.5f)
+            if(_isSkillReady)
+            {
+                // 스킬 준비되면 스킬 사거리까지만 접근하여 스킬 사용
+                // 기본 공격보다 우선 체크
+            }
+            else if (Vector3.Distance(transform.position, _targetEnemy.transform.position) <= 1.5f)
             {
                 if (_targetEnemy != null)
                 {
