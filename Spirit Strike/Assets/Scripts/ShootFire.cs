@@ -10,9 +10,12 @@ public class ShootFire : Skill
 
     void Awake()
     {
+        // 준비 상태, 쿨타임, 대미지, 타겟수, 스킬 범위, 스킬 사거리, 투사체 속도, HP 회복량 정의
         SetSkill(true, 4.0f, 20, 1, 0.0f, 5.0f, 10.0f, 0.0f);
+        Debug.Log($"스킬 사거리는 {_castRange}야");
     }
 
+    // 활성화되면 플레이어로부터 타겟 몬스터 방향으로 투사체 발사
     void OnEnable()
     {
         _player = FindObjectOfType<PlayerControl>().transform.position;

@@ -33,6 +33,8 @@ public class PlayerControl : MonoBehaviour
     }
 
     [SerializeField] GameObject _firePrefab;
+    [SerializeField] ShootFire _fire;
+    [SerializeField] bool _isSkillReady;
 
     [SerializeField] float _rayDistance = 1.5f;
 
@@ -40,7 +42,6 @@ public class PlayerControl : MonoBehaviour
     [SerializeField] ObjectManager _objManager;
     [SerializeField] PlayerDataManager _dataManager;
 
-    [SerializeField] bool _isSkillReady;
 
     void Awake()
     {
@@ -54,6 +55,9 @@ public class PlayerControl : MonoBehaviour
         _agent.speed = _moveSpeed;
 
         _attackSpeed = (float)100 / _dataManager.AtkSpeed;
+
+        _fire = _firePrefab.GetComponent<ShootFire>();
+        //UnityEngine.Debug.Log($"파이어볼의 스킬 사거리는 {_fire.CastRange}");
     }
 
     void Update()
@@ -72,10 +76,11 @@ public class PlayerControl : MonoBehaviour
         }
         else
         {
-            if(_isSkillReady)
+            if(_isSkillReady && Vector3.Distance(transform.position, _targetEnemy.transform.position) <= 10.0f)
             {
                 // 스킬 준비되면 스킬 사거리까지만 접근하여 스킬 사용
                 // 기본 공격보다 우선 체크
+                UseSkill();
             }
             else if (Vector3.Distance(transform.position, _targetEnemy.transform.position) <= 1.5f)
             {
@@ -123,6 +128,39 @@ public class PlayerControl : MonoBehaviour
         _animator.SetBool("isIdle", _isIdle);
     }
 
+    // 스킬 사용 함수 임시 제작
+    // ToDo : 이후 스킬셋 중에서 사용 가능한 스킬 정보를 받아 해당 스킬부터 사용하도록 수정
+    void UseSkill()
+    {
+        if (_attackDelay < (float)100 / _dataManager.AtkSpeed)
+        {
+            return;
+        }
+
+        transform.LookAt(_targetEnemy.transform);
+
+        _isIdle = false;
+        _isWalking = false;
+
+        _animator.SetBool("isWalking", _isWalking);
+        _animator.SetBool("isIdle", _isIdle);
+
+        _animator.SetTrigger("isAttacking");
+
+        Instantiate(_firePrefab, transform);
+        _targetEnemy.TakeDamage(_firePrefab.GetComponent<ShootFire>().Damage);
+
+        if (_targetEnemy.HP <= 0)
+        {
+            // 임시로 몬스터 처치 시 20만큼 경험치 획득
+            _dataManager.GetExp(20);
+            _targetEnemy = null;
+        }
+
+        _attackDelay = 0;
+    }
+
+    // 기본 공격 시 사용할 함수
     void Attack()
     {
         if (_attackDelay < (float)100/_dataManager.AtkSpeed)
@@ -149,7 +187,6 @@ public class PlayerControl : MonoBehaviour
         {
             if (hit.collider.GetComponent<Enemy>() == _targetEnemy)
             {
-                Instantiate(_firePrefab, transform);
                 _targetEnemy.TakeDamage(_dataManager.Attack);
 
                 // 타겟 몬스터가 죽으면 다음 타겟을 설정하기 위해 null로 변경 후 다음 타켓 몬스터 탐색
