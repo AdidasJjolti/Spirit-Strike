@@ -18,15 +18,15 @@ public class CameraController : MonoBehaviour
 
         Debug.DrawRay(transform.position, direction * 100, Color.red);
 
-        if(Physics.Raycast(transform.position, direction * 100, out hit, distance))
+        if (Physics.Raycast(transform.position, direction * 100, out hit, distance))
         {
-            if(hit.transform.GetComponent<Enemy>())
+            if (hit.transform.GetComponent<Enemy>())
             {
                 return;
             }
 
             _obstacleRenderer = hit.transform.GetComponentInChildren<Renderer>();
-            if(_obstacleRenderer != null)
+            if (_obstacleRenderer != null)
             {
                 Material mat = _obstacleRenderer.material;
                 Color matColor = mat.color;

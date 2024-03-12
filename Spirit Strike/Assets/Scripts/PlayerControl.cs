@@ -76,7 +76,7 @@ public class PlayerControl : MonoBehaviour
         }
         else
         {
-            if(_isSkillReady && Vector3.Distance(transform.position, _targetEnemy.transform.position) <= 10.0f)
+            if (_isSkillReady && Vector3.Distance(transform.position, _targetEnemy.transform.position) <= 10.0f)
             {
                 // 스킬 준비되면 스킬 사거리까지만 접근하여 스킬 사용
                 // 기본 공격보다 우선 체크
@@ -113,7 +113,7 @@ public class PlayerControl : MonoBehaviour
 
     void Move()
     {
-        if(_agent.isStopped)
+        if (_agent.isStopped)
         {
             _agent.isStopped = false;
         }
@@ -163,7 +163,7 @@ public class PlayerControl : MonoBehaviour
     // 기본 공격 시 사용할 함수
     void Attack()
     {
-        if (_attackDelay < (float)100/_dataManager.AtkSpeed)
+        if (_attackDelay < (float)100 / _dataManager.AtkSpeed)
         {
             return;
         }
@@ -190,7 +190,7 @@ public class PlayerControl : MonoBehaviour
                 _targetEnemy.TakeDamage(_dataManager.Attack);
 
                 // 타겟 몬스터가 죽으면 다음 타겟을 설정하기 위해 null로 변경 후 다음 타켓 몬스터 탐색
-                if(_targetEnemy.HP <= 0)
+                if (_targetEnemy.HP <= 0)
                 {
                     // 임시로 몬스터 처치 시 20만큼 경험치 획득
                     _dataManager.GetExp(20);
