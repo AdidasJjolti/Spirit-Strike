@@ -33,7 +33,7 @@ public class PlayerControl : MonoBehaviour
     }
 
     [SerializeField] GameObject _firePrefab;
-    [SerializeField] ShootFire _fire;
+    [SerializeField] Skill _fire;
     [SerializeField] bool _isSkillReady;
 
     [SerializeField] float _rayDistance = 1.5f;
@@ -56,8 +56,8 @@ public class PlayerControl : MonoBehaviour
 
         _attackSpeed = (float)100 / _dataManager.AtkSpeed;
 
-        _fire = _firePrefab.GetComponent<ShootFire>();
-        //UnityEngine.Debug.Log($"파이어볼의 스킬 사거리는 {_fire.CastRange}");
+        _fire = _firePrefab.GetComponent<Skill>();
+        UnityEngine.Debug.Log($"파이어볼의 스킬 사거리는 {_fire.CastRange}");
     }
 
     void Update()
@@ -76,10 +76,16 @@ public class PlayerControl : MonoBehaviour
         }
         else
         {
-            if (_isSkillReady && Vector3.Distance(transform.position, _targetEnemy.transform.position) <= 10.0f)
+            if (_isSkillReady && Vector3.Distance(transform.position, _targetEnemy.transform.position) <= 5.0f)
             {
                 // 스킬 준비되면 스킬 사거리까지만 접근하여 스킬 사용
                 // 기본 공격보다 우선 체크
+
+                if (_attackDelay < (float)100 / _dataManager.AtkSpeed)
+                {
+                    return;
+                }
+
                 UseSkill();
             }
             else if (Vector3.Distance(transform.position, _targetEnemy.transform.position) <= 1.5f)
@@ -119,6 +125,7 @@ public class PlayerControl : MonoBehaviour
         }
 
         _agent.SetDestination(_targetEnemy.transform.position);
+        transform.LookAt(_targetEnemy.transform);
         _agent.speed = _moveSpeed;
 
         _isIdle = false;
