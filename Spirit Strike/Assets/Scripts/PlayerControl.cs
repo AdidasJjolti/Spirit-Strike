@@ -83,7 +83,6 @@ public class PlayerControl : MonoBehaviour
             {
                 // 스킬 준비되면 스킬 사거리까지만 접근하여 스킬 사용
                 // 기본 공격보다 우선 체크
-
                 if (_attackDelay >= (float)100 / _dataManager.AtkSpeed)
                 {
                     UseSkill();
@@ -283,5 +282,4 @@ public class PlayerControl : MonoBehaviour
         _dataManager.Hp -= damage;
         //Debug.Log($"아얏! {_hp}");
     }
-    // ToDo : PlayerControl에서는 이동, 공격 등 움직임에 관련한 것들만 하도록 코드 리뉴얼 예정
 }
