@@ -84,14 +84,12 @@ public class PlayerControl : MonoBehaviour
                 // 스킬 준비되면 스킬 사거리까지만 접근하여 스킬 사용
                 // 기본 공격보다 우선 체크
 
-                if (_attackDelay < (float)100 / _dataManager.AtkSpeed)
+                if (_attackDelay >= (float)100 / _dataManager.AtkSpeed)
                 {
-                    return;
+                    UseSkill();
                 }
-
-                UseSkill();
             }
-            else if (Vector3.Distance(transform.position, _targetEnemy.transform.position) <= 1.5f)
+            else if (!_isSkillReady && Vector3.Distance(transform.position, _targetEnemy.transform.position) <= 1.5f)
             {
                 if (_targetEnemy != null)
                 {
@@ -122,8 +120,6 @@ public class PlayerControl : MonoBehaviour
 
     void Move()
     {
-        UnityEngine.Debug.Log("움직이기");
-
         if (_agent.isStopped)
         {
             _agent.isStopped = false;
@@ -144,8 +140,6 @@ public class PlayerControl : MonoBehaviour
     // ToDo : 이후 스킬셋 중에서 사용 가능한 스킬 정보를 받아 해당 스킬부터 사용하도록 수정
     void UseSkill()
     {
-        UnityEngine.Debug.Log("스킬 쓰기");
-
         if (_attackDelay < (float)100 / _dataManager.AtkSpeed)
         {
             return;
@@ -176,8 +170,6 @@ public class PlayerControl : MonoBehaviour
     // 기본 공격 시 사용할 함수
     void Attack()
     {
-        UnityEngine.Debug.Log("공격하기");
-
         if (_attackDelay < (float)100 / _dataManager.AtkSpeed)
         {
             return;

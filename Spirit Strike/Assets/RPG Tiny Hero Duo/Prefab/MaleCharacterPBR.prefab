@@ -2434,9 +2434,7 @@ MonoBehaviour:
   _attackSpeed: 0
   _attackDelay: 1
   _targetEnemy: {fileID: 0}
-  _firePrefab: {fileID: 0}
-  _fire: {fileID: 0}
-  _isSkillReady: 0
+  _firePrefab: {fileID: 1363784577269114, guid: 83f5e574addfb424ebd95bbb8ff8b080, type: 3}
   _rayDistance: 1.5
   _targetLayer:
     serializedVersion: 2
