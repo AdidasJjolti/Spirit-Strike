@@ -4,7 +4,7 @@ using UnityEngine;
 using LitJson;
 using System.IO;
 
-public class PlayerDataManager : Singleton<PlayerDataManager>
+public class PlayerDataManager
 {
     int _hp;
 
@@ -164,9 +164,8 @@ public class PlayerDataManager : Singleton<PlayerDataManager>
     JsonData _expData;
 
 
-    public override void Awake()
+    public PlayerDataManager()
     {
-        base.Awake();
         Level = 1;
         LoadPlayerExperienceDataFromJson();
         LoadPlayerDataFromJson(Level);

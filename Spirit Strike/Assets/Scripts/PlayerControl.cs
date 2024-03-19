@@ -21,7 +21,7 @@ public class PlayerControl : MonoBehaviour
     NavMeshAgent _agent;
 
     [SerializeField] float _attackSpeed;
-    [SerializeField] float _attackDelay = 1.0f;
+    [SerializeField] float _attackDelay;
     [SerializeField] Enemy _targetEnemy;
 
     public Enemy TargetEnemy
@@ -33,9 +33,7 @@ public class PlayerControl : MonoBehaviour
     }
 
     [SerializeField] GameObject _firePrefab;
-    [SerializeField] Skill _fire;
-    [SerializeField] bool _isSkillReady;
-
+    bool _isSkillReady = true;
     [SerializeField] float _rayDistance = 1.5f;
 
     [SerializeField] LayerMask _targetLayer;
@@ -44,6 +42,11 @@ public class PlayerControl : MonoBehaviour
 
 
     void Awake()
+    {
+        _dataManager = new PlayerDataManager();
+    }
+
+    void Start()
     {
         _rigid = GetComponent<Rigidbody>();
         _isIdle = true;
@@ -54,10 +57,10 @@ public class PlayerControl : MonoBehaviour
         _agent = GetComponent<NavMeshAgent>();
         _agent.speed = _moveSpeed;
 
-        _attackSpeed = (float)100 / _dataManager.AtkSpeed;
-
-        _fire = _firePrefab.GetComponent<Skill>();
-        UnityEngine.Debug.Log($"파이어볼의 스킬 사거리는 {_fire.CastRange}");
+        if (_dataManager != null)
+        {
+            _attackSpeed = (float)100 / _dataManager.AtkSpeed;
+        }
     }
 
     void Update()
@@ -119,6 +122,8 @@ public class PlayerControl : MonoBehaviour
 
     void Move()
     {
+        UnityEngine.Debug.Log("움직이기");
+
         if (_agent.isStopped)
         {
             _agent.isStopped = false;
@@ -139,6 +144,8 @@ public class PlayerControl : MonoBehaviour
     // ToDo : 이후 스킬셋 중에서 사용 가능한 스킬 정보를 받아 해당 스킬부터 사용하도록 수정
     void UseSkill()
     {
+        UnityEngine.Debug.Log("스킬 쓰기");
+
         if (_attackDelay < (float)100 / _dataManager.AtkSpeed)
         {
             return;
@@ -155,7 +162,6 @@ public class PlayerControl : MonoBehaviour
         _animator.SetTrigger("isAttacking");
 
         Instantiate(_firePrefab, transform);
-        _targetEnemy.TakeDamage(_firePrefab.GetComponent<ShootFire>().Damage);
 
         if (_targetEnemy.HP <= 0)
         {
@@ -170,6 +176,8 @@ public class PlayerControl : MonoBehaviour
     // 기본 공격 시 사용할 함수
     void Attack()
     {
+        UnityEngine.Debug.Log("공격하기");
+
         if (_attackDelay < (float)100 / _dataManager.AtkSpeed)
         {
             return;
