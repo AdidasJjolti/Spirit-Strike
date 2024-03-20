@@ -154,7 +154,8 @@ public class PlayerControl : MonoBehaviour
 
         _animator.SetTrigger("isAttacking");
 
-        Instantiate(_firePrefab, transform);
+        var pos = transform.position;
+        Instantiate(_firePrefab, new Vector3(pos.x, pos.y + 0.5f, pos.z), Quaternion.identity, transform);
 
         if (_targetEnemy.HP <= 0)
         {
