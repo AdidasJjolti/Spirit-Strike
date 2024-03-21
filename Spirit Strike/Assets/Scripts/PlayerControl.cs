@@ -79,7 +79,7 @@ public class PlayerControl : MonoBehaviour
         }
         else
         {
-            if (_isSkillReady && Vector3.Distance(transform.position, _targetEnemy.transform.position) <= 5.0f)
+            if (_isSkillReady && Vector3.Distance(transform.position, _targetEnemy.transform.position) <= 15.0f)
             {
                 // 스킬 준비되면 스킬 사거리까지만 접근하여 스킬 사용
                 // 기본 공격보다 우선 체크
