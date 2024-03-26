@@ -4836,6 +4836,7 @@ GameObject:
   - component: {fileID: 4402860524990602}
   - component: {fileID: 5602756484914981596}
   - component: {fileID: 6174327481620731783}
+  - component: {fileID: 5276940260220465920}
   m_Layer: 6
   m_Name: FireSlash_Fire
   m_TagString: Untagged
@@ -4891,6 +4892,20 @@ CapsuleCollider:
   m_Height: 0.46
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &5276940260220465920
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1363784577269114}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36f64650f05313244b8dcdf5d9363acb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _projectiles: []
+  _startPosition: {x: 0, y: 0, z: 0}
 --- !u!1 &1564861953570958
 GameObject:
   m_ObjectHideFlags: 0

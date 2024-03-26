@@ -36,33 +36,34 @@ public class FireSlash : Skill
     }
 
     // 활성화되면 3방향으로 투사체 발사
-    public virtual void OnEnable()
+    protected virtual void OnEnable()
     {
+        Debug.Log("부모 OnEnable");
+
+        for(int i = 0; i < _projectiles.Length; i++)
+        {
+            _projectiles[i].SetActive(true);
+        }
+
         Debug.Log($"스킬 공격력은 {_stat._damage}야");
 
         Transform playerTr = FindObjectOfType<PlayerControl>().transform;
         _player = playerTr.position;
         Vector3 dir0 = playerTr.forward;
-        //Debug.Log($"플레이어 전방 좌표는 {dir0}");
 
         _projectiles[0].GetComponent<Rigidbody>().AddForce(dir0 * _stat._projectileSpeed, ForceMode.Impulse);
 
         var quaternion1 = Quaternion.Euler(0, 15f, 0);
         Vector3 dir1 = quaternion1 * dir0;
-        //Debug.Log($"오른쪽으로 {dir1}");
         _projectiles[1].GetComponent<Rigidbody>().AddForce(dir1 * _stat._projectileSpeed, ForceMode.Impulse);
 
         var quaternion2 = Quaternion.Euler(0, 345f, 0);
         Vector3 dir2 = quaternion2 * dir0;
-        //Debug.Log($"왼쪽으로 {dir2}");
         _projectiles[2].GetComponent<Rigidbody>().AddForce(dir2 * _stat._projectileSpeed, ForceMode.Impulse);
     }
 
-    public virtual void Update()
+    protected void RemoveFireSlash()
     {
-        if(_isDistanceLimit)
-        {
-            Destroy(gameObject);
-        }
+        Destroy(this.gameObject);
     }
 }
