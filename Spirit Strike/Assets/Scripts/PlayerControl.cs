@@ -149,13 +149,15 @@ public class PlayerControl : MonoBehaviour
         _isIdle = false;
         _isWalking = false;
 
-        _animator.SetBool("isWalking", _isWalking);
-        _animator.SetBool("isIdle", _isIdle);
-
-        _animator.SetTrigger("isAttacking");
+        SetAttackAnimation(_isWalking, _isIdle);
 
         var pos = transform.position;
         Instantiate(_firePrefab, new Vector3(pos.x, pos.y + 0.5f, pos.z), Quaternion.identity, transform);
+        _isSkillReady = false;
+
+        // ToDo : 각 스킬의 쿨타임을 가져와서 전달하기
+        float coolDown = 20.0f;
+        StartCoroutine(CoolDownSkill(coolDown));
 
         if (_targetEnemy.HP <= 0)
         {
@@ -182,10 +184,7 @@ public class PlayerControl : MonoBehaviour
         _isIdle = false;
         _isWalking = false;
 
-        _animator.SetBool("isWalking", _isWalking);
-        _animator.SetBool("isIdle", _isIdle);
-
-        _animator.SetTrigger("isAttacking");
+        SetAttackAnimation(_isWalking, _isIdle);
 
         Ray ray = new Ray(transform.position + new Vector3(0, 0.5f, 0), transform.forward);
         RaycastHit hit;
@@ -207,6 +206,23 @@ public class PlayerControl : MonoBehaviour
         }
 
         _attackDelay = 0;
+    }
+
+    void SetAttackAnimation(bool isWalking, bool isIdle)
+    {
+        if(_animator == null)
+        {
+            UnityEngine.Debug.LogError("Animator is Null");
+            return;
+        }
+
+        _animator.SetBool("isWalking", isWalking);
+        _animator.SetBool("isIdle", isIdle);
+
+        if(!isWalking && !isIdle)
+        {
+            _animator.SetTrigger("isAttacking");
+        }
     }
 
     void FindNearestEnemy()
@@ -282,5 +298,11 @@ public class PlayerControl : MonoBehaviour
     {
         _dataManager.Hp -= damage;
         //Debug.Log($"아얏! {_hp}");
+    }
+
+    IEnumerator CoolDownSkill(float coolDown)
+    {
+        yield return new WaitForSeconds(coolDown);
+        _isSkillReady = true;
     }
 }

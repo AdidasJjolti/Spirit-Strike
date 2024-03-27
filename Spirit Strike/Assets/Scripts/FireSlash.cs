@@ -38,7 +38,7 @@ public class FireSlash : Skill
     // 활성화되면 3방향으로 투사체 발사
     protected virtual void OnEnable()
     {
-        Debug.Log("부모 OnEnable");
+        //Debug.Log("부모 OnEnable");
 
         for(int i = 0; i < _projectiles.Length; i++)
         {
@@ -60,10 +60,5 @@ public class FireSlash : Skill
         var quaternion2 = Quaternion.Euler(0, 345f, 0);
         Vector3 dir2 = quaternion2 * dir0;
         _projectiles[2].GetComponent<Rigidbody>().AddForce(dir2 * _stat._projectileSpeed, ForceMode.Impulse);
-    }
-
-    protected void RemoveFireSlash()
-    {
-        Destroy(this.gameObject);
     }
 }

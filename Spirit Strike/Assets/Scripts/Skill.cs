@@ -121,4 +121,9 @@ public class Skill : MonoBehaviour
     //    _projectileSpeed = speed;
     //    _healAmount = heal;
     //}
+
+    protected virtual void RemoveSkill()
+    {
+        Destroy(gameObject);
+    }
 }

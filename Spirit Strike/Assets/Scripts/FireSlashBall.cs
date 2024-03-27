@@ -8,19 +8,23 @@ public class FireSlashBall : FireSlash
 
     protected override void OnEnable()
     {
-        Debug.Log("자식 OnEnable");
+        //Debug.Log("자식 OnEnable");
         //base.OnEnable();              // 부모 클래스가 오브젝트로 이미 존재하기 때문에 부모의 OnEnable은 자식의 OnEnable 이전에 이미 호출하므로 사용하지 않음
         _startPosition = transform.position;
-        Debug.Log($"시작 지점은 {_startPosition}");
+        //Debug.Log($"시작 지점은 {_startPosition}");
     }
 
     void Update()
     {
         if(Vector3.Distance(transform.position, _startPosition) >= 25.0f)
         {
-            Debug.Log($"거리는 {Vector3.Distance(transform.position, _startPosition)}야.");
+            //Debug.Log($"거리는 {Vector3.Distance(transform.position, _startPosition)}야.");
             _isDistanceLimit = true;
-            RemoveFireSlash();
+
+            if (transform.parent != null)
+            {
+                Destroy(transform.parent.gameObject);
+            }
         }
     }
 
