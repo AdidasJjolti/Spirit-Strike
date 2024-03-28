@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+// ToDo : Skill 하위 클래스에서 GetStat 함수를 반드시 구현하도록 수정 필요
 public class Skill : MonoBehaviour
 {
     //protected bool _isReady;            // 사용 가능 체크, 쿨타임이 0가 되면 true
@@ -93,7 +95,7 @@ public class Skill : MonoBehaviour
         public float _damageArea;          // 스킬 효과 범위, 적중 시 좌표 기준으로 범위 안에 있는 몬스터 대상 공격, 단일 공격이면 체크하지 않음
         public float _castRange;           // 스킬 사용 거리
         public float _projectileSpeed;     // 스킬 투사체 이동 속도
-        public int _healAmount;          // 치유 스킬의 HP 회복량
+        public int _healAmount;            // 치유 스킬의 HP 회복량
 
         public SkillStat(bool ready, float coolTime, int damage, int Target, float area, float range, float speed, int heal)
         {
@@ -108,19 +110,12 @@ public class Skill : MonoBehaviour
         }
     }
 
-    // 스킬 기본 속성을 정의하는 함수
-    // 각 스킬 생성 시 호출
-    //protected void SetSkill(bool ready, float coolTime, int damage, int Target, float area, float range, float speed, float heal)
-    //{
-    //    _isReady = ready;
-    //    _coolDown = coolTime;
-    //    _damage = damage;
-    //    _damageTarget = Target;
-    //    _damageArea = area;
-    //    _castRange = range;
-    //    _projectileSpeed = speed;
-    //    _healAmount = heal;
-    //}
+    public virtual SkillStat GetStat()
+    {
+        Debug.Log("자식 클래스에서 구현하지 않음");
+        SkillStat stat = new SkillStat();
+        return stat;
+    }
 
     protected virtual void RemoveSkill()
     {

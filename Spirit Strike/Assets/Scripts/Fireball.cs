@@ -55,4 +55,10 @@ public class Fireball : Skill
             Destroy(this.gameObject);
         }
     }
+
+    public override SkillStat GetStat()
+    {
+        Debug.Log("Fireball에서 구현함");
+        return Stat;
+    }
 }

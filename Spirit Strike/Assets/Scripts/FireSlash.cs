@@ -61,4 +61,10 @@ public class FireSlash : Skill
         Vector3 dir2 = quaternion2 * dir0;
         _projectiles[2].GetComponent<Rigidbody>().AddForce(dir2 * _stat._projectileSpeed, ForceMode.Impulse);
     }
+
+    public override SkillStat GetStat()
+    {
+        Debug.Log("FireSlash에서 구현함");
+        return Stat;
+    }
 }
