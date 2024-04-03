@@ -32,7 +32,7 @@ public class PlayerControl : MonoBehaviour
         }
     }
 
-    [SerializeField] GameObject _firePrefab;
+    GameObject _skillPrefab;
     bool _isSkillReady = true;
     [SerializeField] float _rayDistance = 1.5f;
 
@@ -40,10 +40,12 @@ public class PlayerControl : MonoBehaviour
     [SerializeField] ObjectManager _objManager;
     [SerializeField] PlayerDataManager _dataManager;
 
+    SkillManager _skillManager;
 
     void Awake()
     {
         _dataManager = new PlayerDataManager();
+        _skillManager = new SkillManager();
     }
 
     void Start()
@@ -61,6 +63,10 @@ public class PlayerControl : MonoBehaviour
         {
             _attackSpeed = (float)100 / _dataManager.AtkSpeed;
         }
+
+        // 시작과 함께 파이어볼 프리팹을 불러와서 플레이어 자식으로 등록
+        GameObject prefab = _skillManager.LoadPrefab(eSkill.FIREBALL);
+        _skillPrefab = prefab;
     }
 
     void Update()
@@ -152,7 +158,7 @@ public class PlayerControl : MonoBehaviour
         SetAttackAnimation(_isWalking, _isIdle);
 
         var pos = transform.position;
-        Instantiate(_firePrefab, new Vector3(pos.x, pos.y + 0.5f, pos.z), Quaternion.identity, transform);
+        Instantiate(_skillPrefab, new Vector3(pos.x, pos.y + 0.5f, pos.z), Quaternion.identity, transform);
         _isSkillReady = false;
 
         // ToDo : 각 스킬의 쿨타임을 가져와서 전달하기
