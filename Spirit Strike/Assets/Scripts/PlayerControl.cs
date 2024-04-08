@@ -158,7 +158,8 @@ public class PlayerControl : MonoBehaviour
         SetAttackAnimation(_isWalking, _isIdle);
 
         var pos = transform.position;
-        Instantiate(_skillPrefab, new Vector3(pos.x, pos.y + 0.5f, pos.z), Quaternion.identity, transform);
+        GameObject obj = Instantiate(_skillPrefab, new Vector3(pos.x, pos.y + 0.5f, pos.z), Quaternion.identity, transform);
+        _skillManager.GetCoolDown(obj, eSkill.FIREBALL);
         _isSkillReady = false;
 
         // ToDo : 각 스킬의 쿨타임을 가져와서 전달하기
