@@ -71,6 +71,15 @@ public class PlayerControl : MonoBehaviour
 
     void Update()
     {
+        // ToDo : 사용 가능한 스킬이 있는지 탐색
+        foreach(var key in _skillManager.SkillReadyDic.Keys)
+        {
+            if(_skillManager.SkillReadyDic[key] == true)
+            {
+                break;
+            }
+        }
+
         if (_targetEnemy == null)
         {
             _isIdle = true;
