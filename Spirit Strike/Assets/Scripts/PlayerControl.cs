@@ -33,7 +33,9 @@ public class PlayerControl : MonoBehaviour
     }
 
     GameObject _skillPrefab;
-    bool _isSkillReady = true;
+    eSkill _skillType;
+
+    [SerializeField] bool _isSkillReady;
     [SerializeField] float _rayDistance = 1.5f;
 
     [SerializeField] LayerMask _targetLayer;
@@ -65,18 +67,34 @@ public class PlayerControl : MonoBehaviour
         }
 
         // 시작과 함께 파이어볼 프리팹을 불러와서 플레이어 자식으로 등록
-        GameObject prefab = _skillManager.LoadPrefab(eSkill.FIREBALL);
-        _skillPrefab = prefab;
+        //GameObject prefab = _skillManager.LoadPrefab(eSkill.FIREBALL);
+        //_skillPrefab = prefab;
     }
 
     void Update()
     {
         // ToDo : 사용 가능한 스킬이 있는지 탐색
-        foreach(var key in _skillManager.SkillReadyDic.Keys)
+
+        if(_skillPrefab == null)
         {
-            if(_skillManager.SkillReadyDic[key] == true)
+            foreach (var key in _skillManager.SkillReadyDic.Keys)
             {
-                break;
+                if (_skillManager.SkillReadyDic[key] == true)
+                {
+                    UnityEngine.Debug.Log($"사용 가능한 스킬은 {(string)_skillManager.SkillDic[key]}야.");
+                    _isSkillReady = true;
+
+                    // 사용 가능한 스킬 타입에 맞는 프리팹을 _skillPrefab에 사용
+                    _skillPrefab = _skillManager.LoadPrefab(key);
+                    _skillType = key;
+                    break;
+                }
+            }
+
+            if(_skillPrefab == null)
+            {
+                UnityEngine.Debug.Log($"사용 가능한 스킬이 없어.");
+                _isSkillReady = false;
             }
         }
 
@@ -154,7 +172,12 @@ public class PlayerControl : MonoBehaviour
     // ToDo : 이후 스킬셋 중에서 사용 가능한 스킬 정보를 받아 해당 스킬부터 사용하도록 수정
     void UseSkill()
     {
-        if (_attackDelay < (float)100 / _dataManager.AtkSpeed)
+        //if (_attackDelay < (float)100 / _dataManager.AtkSpeed)
+        //{
+        //    return;
+        //}
+
+        if(!_isSkillReady || _skillPrefab == null)
         {
             return;
         }
@@ -168,12 +191,14 @@ public class PlayerControl : MonoBehaviour
 
         var pos = transform.position;
         GameObject obj = Instantiate(_skillPrefab, new Vector3(pos.x, pos.y + 0.5f, pos.z), Quaternion.identity, transform);
-        _skillManager.GetCoolDown(obj, eSkill.FIREBALL);
+        _skillManager.GetCoolDown(obj, _skillType);
         _isSkillReady = false;
+        _skillPrefab = null;
 
-        // ToDo : 각 스킬의 쿨타임을 가져와서 전달하기
-        float coolDown = 20.0f;
-        StartCoroutine(CoolDownSkill(coolDown));
+        //float coolDown = _skillManager.SkillCoolDownDic[_skillType];
+
+        // 사용한 스킬의 쿨타임만큼 사용 불가 상태로 변경
+        StartCoroutine(_skillManager.CountCoolDown(_skillType));
 
         if (_targetEnemy.HP <= 0)
         {

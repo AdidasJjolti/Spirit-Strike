@@ -18,6 +18,22 @@ public class SkillManager
     Dictionary<eSkill, float> _skillCoolDownDic = new Dictionary<eSkill, float>();  // 스킬 타입과 해당 스킬의 쿨타임을 저장할 딕셔너리
     Dictionary<eSkill, bool> _skillReadyDic = new Dictionary<eSkill, bool>();       // 스킬 타입과 해당 스킬의 사용 가능 여부를 저장할 딕셔너리
 
+    public Dictionary<eSkill, string> SkillDic
+    {
+        get
+        {
+            return _skillDic;
+        }
+    }
+
+    public Dictionary<eSkill, float> SkillCoolDownDic
+    {
+        get
+        {
+            return _skillCoolDownDic;
+        }
+    }
+
     public Dictionary<eSkill, bool> SkillReadyDic
     {
         get
@@ -41,11 +57,13 @@ public class SkillManager
         return prefab;
     }
 
+    // PlayerControl에서 만들어진 스킬 프리팹의 쿨타임을 딕셔너리에 저장하는 메서드
+    // 이미 등록된 스킬 타입인 경우 넘어감
     public void GetCoolDown(GameObject prefab, eSkill type)
     {
-        float coolDown = prefab.GetComponent<Skill>().GetStat()._coolDown;         // 프리팹의 Skill 클래스가 가진 쿨타임을 지역 변수로 정의
         if (!_skillCoolDownDic.ContainsKey(type))                                  // 각 스킬 타입별로 쿨타임 정보를 딕셔너리에 저장
         {
+            float coolDown = prefab.GetComponent<Skill>().GetStat()._coolDown;         // 프리팹의 Skill 클래스가 가진 쿨타임을 지역 변수로 정의
             _skillCoolDownDic.Add(type, coolDown);
         }
     }
@@ -53,6 +71,7 @@ public class SkillManager
     // 사용한 스킬의 쿨타임 동안 사용 불가하도록 변경
     public IEnumerator CountCoolDown(eSkill type)
     {
+        Debug.Log("코루틴 실행 중");
         _skillReadyDic[type] = false;
         yield return new WaitForSeconds(_skillCoolDownDic[type]);
         _skillReadyDic[type] = true;
