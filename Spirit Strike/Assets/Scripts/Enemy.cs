@@ -34,6 +34,21 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    bool _isPoisonous;
+
+    public bool IsPoisonous
+    {
+        get
+        {
+            return _isPoisonous;
+        }
+
+        set
+        {
+            _isPoisonous = value;
+        }
+    }
+
     void Awake()
     {
         _agent = GetComponent<NavMeshAgent>();

@@ -74,7 +74,6 @@ public class PlayerControl : MonoBehaviour
     void Update()
     {
         // ToDo : 사용 가능한 스킬이 있는지 탐색
-
         if(_skillPrefab == null)
         {
             foreach (var key in _skillManager.SkillReadyDic.Keys)
@@ -168,15 +167,9 @@ public class PlayerControl : MonoBehaviour
         _animator.SetBool("isIdle", _isIdle);
     }
 
-    // 스킬 사용 함수 임시 제작
-    // ToDo : 이후 스킬셋 중에서 사용 가능한 스킬 정보를 받아 해당 스킬부터 사용하도록 수정
+    //스킬셋 중에서 사용 가능한 스킬 정보를 받아 해당 스킬부터 사용
     void UseSkill()
     {
-        //if (_attackDelay < (float)100 / _dataManager.AtkSpeed)
-        //{
-        //    return;
-        //}
-
         if(!_isSkillReady || _skillPrefab == null)
         {
             return;
@@ -195,13 +188,12 @@ public class PlayerControl : MonoBehaviour
         _isSkillReady = false;
         _skillPrefab = null;
 
-        //float coolDown = _skillManager.SkillCoolDownDic[_skillType];
-
         // 사용한 스킬의 쿨타임만큼 사용 불가 상태로 변경
         StartCoroutine(_skillManager.CountCoolDown(_skillType));
 
         if (_targetEnemy.HP <= 0)
         {
+            // ToDo : 몬스터 정보로부터 획득 경험치 받아오도록 수정
             // 임시로 몬스터 처치 시 20만큼 경험치 획득
             _dataManager.GetExp(20);
             _targetEnemy = null;
@@ -339,11 +331,5 @@ public class PlayerControl : MonoBehaviour
     {
         _dataManager.Hp -= damage;
         //Debug.Log($"아얏! {_hp}");
-    }
-
-    IEnumerator CoolDownSkill(float coolDown)
-    {
-        yield return new WaitForSeconds(coolDown);
-        _isSkillReady = true;
     }
 }

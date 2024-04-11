@@ -28,7 +28,7 @@ public class FireSlash : Skill
             _coolDown = 6.0f,
             _damage = 20,
             _damageTarget = 1,
-            _damageArea = 0.0f,
+            _duration = 0f,
             _castRange = 5.0f,
             _projectileSpeed = 10.0f,
             _healAmount = 0

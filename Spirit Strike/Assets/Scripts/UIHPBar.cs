@@ -16,20 +16,11 @@ public class UIHPBar : MonoBehaviour
 
     void Start()
     {
-        //_canvas = GetComponentInParent<Canvas>();
-        //_camera = _canvas.worldCamera;
-        //_rectParent = _canvas.GetComponent<RectTransform>();
-        //_rectHP = this.gameObject.GetComponent<RectTransform>();
         _slider = GetComponent<Slider>();
     }
 
     void LateUpdate()
     {
-        //var screenPos = Camera.main.WorldToScreenPoint(_enemyTransform.position + _offset);
-        //var localPos = Vector2.zero;
-        //RectTransformUtility.ScreenPointToLocalPointInRectangle(_rectParent, screenPos, _camera, out localPos);
-        //_rectHP.localPosition = localPos;
-
         if(_enemyTransform == null)
         {
             return;

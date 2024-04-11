@@ -20,14 +20,14 @@ public class Fireball : Skill
 
     void Awake()
     {
-        // 준비 상태, 쿨타임, 대미지, 타겟수, 스킬 범위, 스킬 사거리, 투사체 속도, HP 회복량 정의
+        // 준비 상태, 쿨타임, 대미지, 타겟수, 스킬 지속 시간, 스킬 사거리, 투사체 속도, HP 회복량 정의
         _stat = new SkillStat
         {
             _isReady = true,
             _coolDown = 4.0f,
             _damage = 20,
             _damageTarget = 1,
-            _damageArea = 0.0f,
+            _duration = 0f,
             _castRange = 5.0f,
             _projectileSpeed = 10.0f,
             _healAmount = 0
