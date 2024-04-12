@@ -25,7 +25,7 @@ public class Poison : Skill
         {
             _isReady = true,
             _coolDown = 25.0f,
-            _damage = 20,               // 초당 대미지
+            _damage = 5,               // 초당 대미지
             _damageTarget = 9999,
             _duration = 5.1f,           // 5초 동안 유지
             _castRange = 5.0f,
@@ -55,6 +55,12 @@ public class Poison : Skill
             yield return new WaitForSeconds(1.0f);
             foreach(var monster in _poisonousMonsters)
             {
+                // 이미 죽은 몬스터를 체크하려고 할 때 리스트에서 제거
+                if(monster == null)
+                {
+                    _poisonousMonsters.Remove(monster);
+                }
+
                 monster.TakeDamage(_stat._damage);
             }
         }
@@ -76,5 +82,11 @@ public class Poison : Skill
             other.GetComponent<Enemy>().IsPoisonous = false;
             _poisonousMonsters.Remove(other.GetComponent<Enemy>());
         }
+    }
+
+    public override SkillStat GetStat()
+    {
+        Debug.Log("Poison에서 구현함");
+        return Stat;
     }
 }

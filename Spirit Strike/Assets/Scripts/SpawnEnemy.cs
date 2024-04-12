@@ -10,7 +10,7 @@ public class SpawnEnemy : MonoBehaviour
     void Start()
     {
         int i = 1;
-        while (i <= 2)
+        while (i <= 10)
         {
             _objManager._monsterList.Add(Instantiate(_enemy, transform));
             i++;

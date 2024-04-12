@@ -111,7 +111,7 @@ public class PlayerControl : MonoBehaviour
         }
         else
         {
-            if (_isSkillReady && Vector3.Distance(transform.position, _targetEnemy.transform.position) <= 15.0f)
+            if (_isSkillReady && Vector3.Distance(transform.position, _targetEnemy.transform.position) <= 5.0f)
             {
                 // 스킬 준비되면 스킬 사거리까지만 접근하여 스킬 사용
                 // 기본 공격보다 우선 체크
@@ -183,7 +183,20 @@ public class PlayerControl : MonoBehaviour
         SetAttackAnimation(_isWalking, _isIdle);
 
         var pos = transform.position;
-        GameObject obj = Instantiate(_skillPrefab, new Vector3(pos.x, pos.y + 0.5f, pos.z), Quaternion.identity, transform);
+
+        GameObject obj;
+
+        switch(_skillType)
+        {
+            case eSkill.POISON:
+            obj = Instantiate(_skillPrefab, new Vector3(pos.x, pos.y + 0.3f, pos.z + 3.0f), Quaternion.identity);
+            break;
+
+            default:
+            obj = Instantiate(_skillPrefab, new Vector3(pos.x, pos.y + 0.5f, pos.z), Quaternion.identity, transform);
+                break;
+        }
+
         _skillManager.GetCoolDown(obj, _skillType);
         _isSkillReady = false;
         _skillPrefab = null;
@@ -208,6 +221,11 @@ public class PlayerControl : MonoBehaviour
         if (_attackDelay < (float)100 / _dataManager.AtkSpeed)
         {
             return;
+        }
+
+        if(_targetEnemy == null)
+        {
+            FindNearestEnemy();
         }
 
         UnityEngine.Debug.Log($"공격 속도는 {(float)100 / _dataManager.AtkSpeed}이야.");
@@ -263,8 +281,8 @@ public class PlayerControl : MonoBehaviour
         Enemy targetEnemy = null;
         float diff = 100f;
 
-        // ToDo : Raycast 대신에 맵 내에 있는 몬스터가 스폰될 때마다 미리 정의한 리스트에 몬스터를 추가하고 여기에서 거리를 탐색하도록 수정
-        // ToDo : 오브젝트 풀, 스피어캐스트, 또는 다른 탐색 로직을 사용하여 테스트해보기
+        // Raycast 대신에 맵 내에 있는 몬스터가 스폰될 때마다 미리 정의한 리스트에 몬스터를 추가하고 여기에서 거리를 탐색하도록 수정
+        // 오브젝트 풀, 스피어캐스트, 또는 다른 탐색 로직을 사용하여 테스트해보기
         // 결과 : 오브젝트 풀로 탐색 시 스피어캐스트보다 1.5배 ~ 2배 정도 더 빠르게 검색 가능
 
         #region

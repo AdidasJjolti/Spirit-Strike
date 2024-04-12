@@ -7,6 +7,8 @@ public enum eSkill
     NONE = 0,
     FIREBALL,
     FIRESLASH,
+    POISON,
+    HEAL,
 
     MAX
 }
@@ -44,11 +46,14 @@ public class SkillManager
 
     public SkillManager()
     {
-        _skillDic.Add(eSkill.FIREBALL, "Prefabs/Fireball");
-        _skillReadyDic.Add(eSkill.FIREBALL, true);
+        //_skillDic.Add(eSkill.FIREBALL, "Prefabs/Fireball");
+        //_skillReadyDic.Add(eSkill.FIREBALL, true);
 
-        _skillDic.Add(eSkill.FIRESLASH, "Prefabs/FireSlash");
-        _skillReadyDic.Add(eSkill.FIRESLASH, true);
+        //_skillDic.Add(eSkill.FIRESLASH, "Prefabs/FireSlash");
+        //_skillReadyDic.Add(eSkill.FIRESLASH, true);
+
+        _skillDic.Add(eSkill.POISON, "Prefabs/Poison");
+        _skillReadyDic.Add(eSkill.POISON, true);
     }
 
     public GameObject LoadPrefab(eSkill type)
@@ -61,7 +66,7 @@ public class SkillManager
     // 이미 등록된 스킬 타입인 경우 넘어감
     public void GetCoolDown(GameObject prefab, eSkill type)
     {
-        if (!_skillCoolDownDic.ContainsKey(type))                                  // 각 스킬 타입별로 쿨타임 정보를 딕셔너리에 저장
+        if (!_skillCoolDownDic.ContainsKey(type))                                     // 각 스킬 타입별로 쿨타임 정보를 딕셔너리에 저장
         {
             float coolDown = prefab.GetComponent<Skill>().GetStat()._coolDown;         // 프리팹의 Skill 클래스가 가진 쿨타임을 지역 변수로 정의
             _skillCoolDownDic.Add(type, coolDown);
@@ -71,7 +76,7 @@ public class SkillManager
     // 사용한 스킬의 쿨타임 동안 사용 불가하도록 변경
     public IEnumerator CountCoolDown(eSkill type)
     {
-        Debug.Log("코루틴 실행 중");
+        //Debug.Log("코루틴 실행 중");
         _skillReadyDic[type] = false;
         yield return new WaitForSeconds(_skillCoolDownDic[type]);
         _skillReadyDic[type] = true;

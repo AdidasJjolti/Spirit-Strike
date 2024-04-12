@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class Enemy : MonoBehaviour
 {
-    [SerializeField] int _MaxHP = 20;
+    [SerializeField] int _MaxHP = 50;
     [SerializeField] int _HP = 20;
     [SerializeField] PlayerControl _player;   // 공격 목표물로 사용할 플레이어 위치 저장
     NavMeshAgent _agent;
