@@ -177,6 +177,11 @@ public class PlayerControl : MonoBehaviour
 
         transform.LookAt(_targetEnemy.transform);
 
+        if(Vector3.Distance(transform.position, _targetEnemy.transform.position) > 5.0f || _targetEnemy.HP <= 0)
+        {
+            return;
+        }
+
         _isIdle = false;
         _isWalking = false;
 
