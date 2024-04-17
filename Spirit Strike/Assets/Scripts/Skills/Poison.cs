@@ -47,7 +47,7 @@ public class Poison : Skill
         Destroy(this.gameObject);
     }
 
-    // ToDo : 도트 대미지 적용 여부 체크
+    // 1초마다 범위 내 몬스터에게 도트 대미지 적용
     IEnumerator DealPoisonDamage()
     {
         while(true)

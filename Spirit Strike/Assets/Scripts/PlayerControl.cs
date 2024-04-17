@@ -73,7 +73,6 @@ public class PlayerControl : MonoBehaviour
 
     void Update()
     {
-        // ToDo : 사용 가능한 스킬이 있는지 탐색
         if(_skillPrefab == null)
         {
             foreach (var key in _skillManager.SkillReadyDic.Keys)
@@ -177,9 +176,12 @@ public class PlayerControl : MonoBehaviour
 
         transform.LookAt(_targetEnemy.transform);
 
-        if(Vector3.Distance(transform.position, _targetEnemy.transform.position) > 5.0f || _targetEnemy.HP <= 0)
+        if(_skillType != eSkill.HEAL)
         {
-            return;
+            if (Vector3.Distance(transform.position, _targetEnemy.transform.position) > 5.0f || _targetEnemy.HP <= 0)
+            {
+                return;
+            }
         }
 
         _isIdle = false;
@@ -194,7 +196,11 @@ public class PlayerControl : MonoBehaviour
         switch(_skillType)
         {
             case eSkill.POISON:
-            obj = Instantiate(_skillPrefab, new Vector3(pos.x, pos.y + 0.3f, pos.z + 3.0f), Quaternion.identity);
+            obj = Instantiate(_skillPrefab, new Vector3(pos.x, pos.y + 0.4f, pos.z + 3.0f), Quaternion.identity);
+            break;
+
+            case eSkill.HEAL:
+            obj = Instantiate(_skillPrefab, new Vector3(pos.x, pos.y + 0.4f, pos.z), Quaternion.identity, transform);
             break;
 
             default:
@@ -354,5 +360,16 @@ public class PlayerControl : MonoBehaviour
     {
         _dataManager.Hp -= damage;
         //Debug.Log($"아얏! {_hp}");
+    }
+
+    public void Heal(int healAmount)
+    {
+        _dataManager.Hp += healAmount;
+
+        // 최대 체력을 넘어서 회복하지 않음
+        if(_dataManager.Hp >= _dataManager.MaxHP)
+        {
+            _dataManager.Hp = _dataManager.MaxHP;
+        }
     }
 }

@@ -6,6 +6,21 @@ using System.IO;
 
 public class PlayerDataManager
 {
+    int _maxHP;
+
+    public int MaxHP
+    {
+        get
+        {
+            return _maxHP;
+        }
+
+        set
+        {
+            _maxHP = value;
+        }
+    }
+
     int _hp;
 
     public int Hp
@@ -182,6 +197,8 @@ public class PlayerDataManager
         _dodge = (int)_data[level - 1]["dodge"];
         _critical = (int)_data[level - 1]["critical"];
         _atkSpeed = (int)_data[level - 1]["atk_speed"];
+
+        _maxHP = _hp;
 
         UnityEngine.Debug.Log($"공격력은 {_attack}이야.");
     }
