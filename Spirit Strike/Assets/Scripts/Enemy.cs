@@ -191,7 +191,7 @@ public class Enemy : MonoBehaviour
         _hpBarSlider.value = _MaxHP;
 
         var bar = hpBar.GetComponent<UIHPBar>();
-        bar._enemyTransform = this.gameObject.transform;
+        bar._transform = this.gameObject.transform;
         _hpBar = bar;
     }
 }

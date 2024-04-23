@@ -5,6 +5,7 @@ using System.IO;
 using LitJson;
 using UnityEngine.AI;
 using System.Diagnostics;
+using UnityEngine.UI;
 
 public class PlayerControl : MonoBehaviour
 {
@@ -44,10 +45,21 @@ public class PlayerControl : MonoBehaviour
 
     SkillManager _skillManager;
 
+    #region
+    // HP바 UI 설정 전역 변수
+    [SerializeField] GameObject _hpBarPrefab;   // HP바 프리팹
+    [SerializeField] Canvas _hpBarCanvas;       // HP바가 생성될 캔버스
+    [SerializeField] Slider _hpBarSlider;       // HP바가 가진 슬라이더 컴포넌트
+    GameObject _hpBarObj;                       // 적 생성될 때 함께 생성한 HP바 게임오브젝트
+    UIHPBar _hpBar;                             // 대미지를 입을 때 슬라이더 값을 변경할 함수 연결용 변수
+    #endregion
+
     void Awake()
     {
         _dataManager = new PlayerDataManager();
         _skillManager = new SkillManager();
+
+        SetHPBar();
     }
 
     void Start()
@@ -359,6 +371,7 @@ public class PlayerControl : MonoBehaviour
     public void TakeDamage(int damage)
     {
         _dataManager.Hp -= damage;
+        _hpBar.ChangeValue(_dataManager.Hp);
         //Debug.Log($"아얏! {_hp}");
     }
 
@@ -371,5 +384,22 @@ public class PlayerControl : MonoBehaviour
         {
             _dataManager.Hp = _dataManager.MaxHP;
         }
+
+        _hpBar.ChangeValue(_dataManager.Hp);
+    }
+
+    void SetHPBar()
+    {
+        _hpBarCanvas = GameObject.Find("Canvas").GetComponent<Canvas>();
+        GameObject hpBar = Instantiate<GameObject>(_hpBarPrefab, _hpBarCanvas.transform);
+        _hpBarObj = hpBar;
+
+        _hpBarSlider = hpBar.GetComponent<Slider>();
+        _hpBarSlider.maxValue = _dataManager.MaxHP;
+        _hpBarSlider.value = _dataManager.MaxHP;
+
+        var bar = hpBar.GetComponent<UIHPBar>();
+        bar._transform = this.gameObject.transform;
+        _hpBar = bar;
     }
 }

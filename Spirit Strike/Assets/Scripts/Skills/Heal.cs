@@ -39,6 +39,7 @@ public class Heal : Skill
     // duration동안 스킬 이펙트가 유지
     IEnumerator SpellHeal()
     {
+        HealPlayer();
         yield return new WaitForSeconds(_stat._duration);
         Destroy(this.gameObject);
     }
