@@ -25,9 +25,9 @@ public class Poison : Skill
         {
             _isReady = true,
             _coolDown = 25.0f,
-            _damage = 5,               // 초당 대미지
+            _damage = 5,                // 초당 대미지
             _damageTarget = 9999,
-            _duration = 5.1f,           // 5초 동안 유지
+            _duration = 4.9f,           // 5초 동안 유지
             _castRange = 5.0f,
             _projectileSpeed = 10.0f,   // 사실상 큰 의미 없음
             _healAmount = 0
@@ -36,34 +36,52 @@ public class Poison : Skill
 
     void OnEnable()
     {
-        StartCoroutine(SpellPoison());
         StartCoroutine(DealPoisonDamage());
+    }
+
+    void OnDestroy()
+    {
+        StopCoroutine(DealPoisonDamage());
     }
 
     // duration동안 스킬이 유지
     IEnumerator SpellPoison()
     {
         yield return new WaitForSeconds(_stat._duration);
+        //StopCoroutine(DealPoisonDamage());
         Destroy(this.gameObject);
     }
 
     // 1초마다 범위 내 몬스터에게 도트 대미지 적용
     IEnumerator DealPoisonDamage()
     {
-        while(true)
+        float elapsedTime = 0.0f;
+        int time = 1;
+
+        while (elapsedTime < _stat._duration)
         {
+            Debug.Log($"{time}번째 대미지");
+
             yield return new WaitForSeconds(1.0f);
-            foreach(var monster in _poisonousMonsters)
+            elapsedTime += 1.0f;
+
+            foreach (var monster in _poisonousMonsters)
             {
                 // 이미 죽은 몬스터를 체크하려고 할 때 리스트에서 제거
-                if(monster == null)
+                if (monster == null)
                 {
-                    _poisonousMonsters.Remove(monster);
+                    continue;
                 }
-
-                monster.TakeDamage(_stat._damage);
+                else
+                {
+                    monster.TakeDamage(_stat._damage);
+                }
             }
+
+            time++;
         }
+
+        Destroy(this.gameObject);
     }
 
     void OnTriggerEnter(Collider other)

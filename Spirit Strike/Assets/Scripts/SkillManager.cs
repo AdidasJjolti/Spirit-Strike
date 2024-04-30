@@ -46,14 +46,14 @@ public class SkillManager
 
     public SkillManager()
     {
-        //_skillDic.Add(eSkill.FIREBALL, "Prefabs/Fireball");
-        //_skillReadyDic.Add(eSkill.FIREBALL, true);
+        _skillDic.Add(eSkill.FIREBALL, "Prefabs/Fireball");
+        _skillReadyDic.Add(eSkill.FIREBALL, true);
 
-        //_skillDic.Add(eSkill.FIRESLASH, "Prefabs/FireSlash");
-        //_skillReadyDic.Add(eSkill.FIRESLASH, true);
+        _skillDic.Add(eSkill.FIRESLASH, "Prefabs/FireSlash");
+        _skillReadyDic.Add(eSkill.FIRESLASH, true);
 
-        //_skillDic.Add(eSkill.POISON, "Prefabs/Poison");
-        //_skillReadyDic.Add(eSkill.POISON, true);
+        _skillDic.Add(eSkill.POISON, "Prefabs/Poison");
+        _skillReadyDic.Add(eSkill.POISON, true);
 
         _skillDic.Add(eSkill.HEAL, "Prefabs/Heal");
         _skillReadyDic.Add(eSkill.HEAL, true);

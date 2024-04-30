@@ -356,12 +356,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a1c1bf65b221c64f851a65fd4901711, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _MaxHP: 20
-  _HP: 20
+  _MaxHP: 30
+  _HP: 30
   _player: {fileID: 0}
   _attackSpeed: 1
   _attackDelay: 1
-  _damage: 1
+  _damage: 10
   _atkEffect: {fileID: 2374644240883026974}
   _waitSec: 0.19
   _hpBarPrefab: {fileID: 4075485195887041563, guid: f4466f219c07d994fa433c204f1b20bc, type: 3}

@@ -85,6 +85,7 @@ public class PlayerControl : MonoBehaviour
 
     void Update()
     {
+        // 사용가능한 스킬 찾기
         if(_skillPrefab == null)
         {
             foreach (var key in _skillManager.SkillReadyDic.Keys)
@@ -105,43 +106,52 @@ public class PlayerControl : MonoBehaviour
             {
                 UnityEngine.Debug.Log($"사용 가능한 스킬이 없어.");
                 _isSkillReady = false;
+                _skillType = eSkill.NONE;
             }
         }
 
-        if (_targetEnemy == null)
+        // 힐 스킬을 사용할 차례면 타겟 몬스터 상관 없이 바로 스킬 사용
+        if(_skillType == eSkill.HEAL)
         {
-            _isIdle = true;
-            _isWalking = false;
-
-            _animator.SetBool("isWalking", _isWalking);
-            _animator.SetBool("isIdle", _isIdle);
-
-            _agent.isStopped = true;
-            FindNearestEnemy();
-            //UnityEngine.Debug.Log("타겟 몬스터 탐색");
+            UseSkill();
         }
         else
         {
-            if (_isSkillReady && Vector3.Distance(transform.position, _targetEnemy.transform.position) <= 5.0f)
+            if (_targetEnemy == null)
             {
-                // 스킬 준비되면 스킬 사거리까지만 접근하여 스킬 사용
-                // 기본 공격보다 우선 체크
-                if (_attackDelay >= (float)100 / _dataManager.AtkSpeed)
-                {
-                    UseSkill();
-                }
-            }
-            else if (!_isSkillReady && Vector3.Distance(transform.position, _targetEnemy.transform.position) <= 1.5f)
-            {
-                if (_targetEnemy != null)
-                {
-                    _agent.isStopped = true;
-                    Attack();
-                }
+                _isIdle = true;
+                _isWalking = false;
+
+                _animator.SetBool("isWalking", _isWalking);
+                _animator.SetBool("isIdle", _isIdle);
+
+                _agent.isStopped = true;
+                FindNearestEnemy();
+                //UnityEngine.Debug.Log("타겟 몬스터 탐색");
             }
             else
             {
-                Move();
+                if (_isSkillReady && Vector3.Distance(transform.position, _targetEnemy.transform.position) <= 5.0f)
+                {
+                    // 스킬 준비되면 스킬 사거리까지만 접근하여 스킬 사용
+                    // 기본 공격보다 우선 체크
+                    if (_attackDelay >= (float)100 / _dataManager.AtkSpeed)
+                    {
+                        UseSkill();
+                    }
+                }
+                else if (!_isSkillReady && Vector3.Distance(transform.position, _targetEnemy.transform.position) <= 1.5f)
+                {
+                    if (_targetEnemy != null)
+                    {
+                        _agent.isStopped = true;
+                        Attack();
+                    }
+                }
+                else
+                {
+                    Move();
+                }
             }
         }
 
@@ -186,23 +196,24 @@ public class PlayerControl : MonoBehaviour
             return;
         }
 
-        transform.LookAt(_targetEnemy.transform);
-
+        // 힐이 아닌 공격 스킬이면 타켓 몬스터쪽으로 바라보기
         if(_skillType != eSkill.HEAL)
         {
+            transform.LookAt(_targetEnemy.transform);
+
             if (Vector3.Distance(transform.position, _targetEnemy.transform.position) > 5.0f || _targetEnemy.HP <= 0)
             {
                 return;
             }
         }
 
+        // 공격 애니메이션 트리거
         _isIdle = false;
         _isWalking = false;
-
         SetAttackAnimation(_isWalking, _isIdle);
 
-        var pos = transform.position;
 
+        var pos = transform.position;
         GameObject obj;
 
         switch(_skillType)
@@ -227,7 +238,7 @@ public class PlayerControl : MonoBehaviour
         // 사용한 스킬의 쿨타임만큼 사용 불가 상태로 변경
         StartCoroutine(_skillManager.CountCoolDown(_skillType));
 
-        if (_targetEnemy.HP <= 0)
+        if (_targetEnemy != null && _targetEnemy.HP <= 0)
         {
             // ToDo : 몬스터 정보로부터 획득 경험치 받아오도록 수정
             // 임시로 몬스터 처치 시 20만큼 경험치 획득
