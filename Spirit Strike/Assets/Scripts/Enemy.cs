@@ -4,17 +4,35 @@ using UnityEngine;
 using UnityEngine.AI;
 using System;
 using UnityEngine.UI;
+using LitJson;
+using System.IO;
+
+public enum eMonster
+{
+    NONE = 0,
+    GHOST,
+
+    MAX
+}
 
 public class Enemy : MonoBehaviour
 {
+    [SerializeField] eMonster _type;
+
     [SerializeField] int _MaxHP;
     [SerializeField] int _HP;
+    [SerializeField] int _attack;
+    [SerializeField] int _defence;
+    [SerializeField] int _dodge;
+    [SerializeField] int _critical;
+    [SerializeField] int _attackSpeed;
+
+
     [SerializeField] PlayerControl _player;   // 공격 목표물로 사용할 플레이어 위치 저장
     NavMeshAgent _agent;
     Rigidbody _rigid;
     Animator _animator;
 
-    [SerializeField] float _attackSpeed = 1.0f;
     [SerializeField] float _attackDelay = 1.0f;
     [SerializeField] int _damage;
     [SerializeField] ParticleSystem _atkEffect;
@@ -54,6 +72,9 @@ public class Enemy : MonoBehaviour
         _agent = GetComponent<NavMeshAgent>();
         _rigid = GetComponent<Rigidbody>();
         _animator = GetComponent<Animator>();
+
+        LoadEnemyData(_type);
+        Debug.Log($"몬스터의 공격력은 {_attack}이야.");
 
         SetHPBar();
     }
@@ -193,5 +214,20 @@ public class Enemy : MonoBehaviour
         var bar = hpBar.GetComponent<UIHPBar>();
         bar._transform = this.gameObject.transform;
         _hpBar = bar;
+    }
+
+
+    void LoadEnemyData(eMonster type)
+    {
+        string JsonString = File.ReadAllText(Application.dataPath + "/Resources/MonsterData.json");
+        JsonData jsonData = JsonMapper.ToObject(JsonString);
+        _HP = (int)jsonData[(int)type - 1]["hp"];
+        _attack = (int)jsonData[(int)type - 1]["attack"];
+        _defence = (int)jsonData[(int)type - 1]["defence"];
+        _dodge = (int)jsonData[(int)type - 1]["dodge"];
+        _critical = (int)jsonData[(int)type - 1]["critical"];
+        _attackSpeed = (int)jsonData[(int)type - 1]["atk_speed"];
+
+        _MaxHP = _HP;
     }
 }

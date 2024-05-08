@@ -356,10 +356,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a1c1bf65b221c64f851a65fd4901711, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _type: 1
   _MaxHP: 30
   _HP: 30
-  _player: {fileID: 0}
+  _attack: 0
+  _defence: 0
+  _dodge: 0
+  _critical: 0
   _attackSpeed: 1
+  _player: {fileID: 0}
   _attackDelay: 1
   _damage: 10
   _atkEffect: {fileID: 2374644240883026974}

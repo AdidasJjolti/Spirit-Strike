@@ -1,0 +1,11 @@
+[
+ {
+  "type": "GHOST",
+  "hp": 50,
+  "attack": 10,
+  "defence": 1,
+  "dodge": 0,
+  "critical": 0,
+  "atk_speed": 100
+ }
+]

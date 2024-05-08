@@ -48,6 +48,7 @@ public class PlayerData
             _attack = value;
         }
     }
+
     int _defence;
 
     public int Defence
