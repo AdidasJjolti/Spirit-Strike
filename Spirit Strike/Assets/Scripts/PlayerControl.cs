@@ -92,7 +92,7 @@ public class PlayerControl : MonoBehaviour
             {
                 if (_skillManager.SkillReadyDic[key] == true)
                 {
-                    UnityEngine.Debug.Log($"사용 가능한 스킬은 {(string)_skillManager.SkillDic[key]}야.");
+                    //UnityEngine.Debug.Log($"사용 가능한 스킬은 {(string)_skillManager.SkillDic[key]}야.");
                     _isSkillReady = true;
 
                     // 사용 가능한 스킬 타입에 맞는 프리팹을 _skillPrefab에 사용
@@ -104,7 +104,7 @@ public class PlayerControl : MonoBehaviour
 
             if(_skillPrefab == null)
             {
-                UnityEngine.Debug.Log($"사용 가능한 스킬이 없어.");
+                //UnityEngine.Debug.Log($"사용 가능한 스킬이 없어.");
                 _isSkillReady = false;
                 _skillType = eSkill.NONE;
             }
@@ -262,7 +262,7 @@ public class PlayerControl : MonoBehaviour
             FindNearestEnemy();
         }
 
-        UnityEngine.Debug.Log($"공격 속도는 {(float)100 / _dataManager.AtkSpeed}이야.");
+        //UnityEngine.Debug.Log($"공격 속도는 {(float)100 / _dataManager.AtkSpeed}이야.");
 
         transform.LookAt(_targetEnemy.transform);
 
@@ -283,8 +283,18 @@ public class PlayerControl : MonoBehaviour
                 // 타겟 몬스터가 죽으면 다음 타겟을 설정하기 위해 null로 변경 후 다음 타켓 몬스터 탐색
                 if (_targetEnemy.HP <= 0)
                 {
-                    // 임시로 몬스터 처치 시 20만큼 경험치 획득
-                    _dataManager.GetExp(20);
+                    int level = _dataManager.Level;
+
+                    // 몬스터 처치 시 EXP만큼 경험치 획득
+                    _dataManager.GetExp(_targetEnemy.EXP);
+
+                    // 만약 지역 변수 level과 데이터매니저의 레벨이 달라진 경우 레벨업이므로 HP바 UI의 최대값, 현재값을 변경
+                    if(level != _dataManager.Level)
+                    {
+                        _hpBar.ChangeMaxValue(_dataManager.MaxHP);
+                        _hpBar.ChangeValue(_dataManager.Hp);
+                    }
+
                     _targetEnemy = null;
                 }
             }
@@ -383,7 +393,7 @@ public class PlayerControl : MonoBehaviour
     {
         _dataManager.Hp -= damage;
         _hpBar.ChangeValue(_dataManager.Hp);
-        //Debug.Log($"아얏! {_hp}");
+        UnityEngine.Debug.Log($"아얏!");
     }
 
     public void Heal(int healAmount)

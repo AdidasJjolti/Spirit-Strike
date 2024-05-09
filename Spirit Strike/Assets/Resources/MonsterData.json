@@ -2,10 +2,11 @@
  {
   "type": "GHOST",
   "hp": 50,
-  "attack": 10,
+  "attack": 2,
   "defence": 1,
   "dodge": 0,
   "critical": 0,
-  "atk_speed": 100
+  "atk_speed": 100,
+  "exp": 5
  }
 ]

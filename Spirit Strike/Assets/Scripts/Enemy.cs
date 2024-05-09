@@ -26,6 +26,15 @@ public class Enemy : MonoBehaviour
     [SerializeField] int _dodge;
     [SerializeField] int _critical;
     [SerializeField] int _attackSpeed;
+    int _exp;
+
+    public int EXP
+    {
+        get
+        {
+            return _exp;
+        }
+    }
 
 
     [SerializeField] PlayerControl _player;   // 공격 목표물로 사용할 플레이어 위치 저장
@@ -33,8 +42,7 @@ public class Enemy : MonoBehaviour
     Rigidbody _rigid;
     Animator _animator;
 
-    [SerializeField] float _attackDelay = 1.0f;
-    [SerializeField] int _damage;
+    [SerializeField] float _attackDelay;
     [SerializeField] ParticleSystem _atkEffect;
     [SerializeField] float _waitSec;
 
@@ -75,6 +83,7 @@ public class Enemy : MonoBehaviour
 
         LoadEnemyData(_type);
         Debug.Log($"몬스터의 공격력은 {_attack}이야.");
+        Debug.Log($"몬스터의 공격속도는 {_attackSpeed}이야.");
 
         SetHPBar();
     }
@@ -128,9 +137,8 @@ public class Enemy : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        _HP -= damage;
+        _HP -= Mathf.Max(damage - _defence, 0);
         _hpBar.ChangeValue(HP);
-        //Debug.Log($"현재 체력은 : {_HP}");
 
         if (_HP <= 0)
         {
@@ -156,6 +164,8 @@ public class Enemy : MonoBehaviour
 
     void AttackPlayer()
     {
+        //Debug.Log($"{gameObject.transform.name}이 플레이어 공격!");
+
         if(_animator == null)
         {
             Debug.LogError("Animator is Null");
@@ -168,7 +178,7 @@ public class Enemy : MonoBehaviour
             return;
         }
 
-        if (_attackDelay < _attackSpeed)
+        if (_attackDelay < (float) 100 / _attackSpeed)
         {
             _animator.SetBool("isAttacking", false);
             return;
@@ -178,7 +188,7 @@ public class Enemy : MonoBehaviour
         _animator.SetBool("isMoving", false);
         _animator.SetBool("isAttacking", true);
 
-        _player.TakeDamage(_damage);
+        _player.TakeDamage(_attack);
 
         StartCoroutine("PlayEffect");
         _attackDelay = 0;
@@ -227,6 +237,7 @@ public class Enemy : MonoBehaviour
         _dodge = (int)jsonData[(int)type - 1]["dodge"];
         _critical = (int)jsonData[(int)type - 1]["critical"];
         _attackSpeed = (int)jsonData[(int)type - 1]["atk_speed"];
+        _exp = (int)jsonData[(int)type - 1]["exp"];
 
         _MaxHP = _HP;
     }

@@ -21,6 +21,16 @@ public class PlayerData
         }
     }
 
+    int _maxHP;
+
+    public int MaxHP
+    {
+        get
+        {
+            return _maxHP;
+        }
+    }
+
     int _hp;
 
     public int Hp
@@ -133,6 +143,7 @@ public class PlayerData
         _critical = (int)_data[level - 1]["critical"];
         _atkSpeed = (int)_data[level - 1]["atk_speed"];
 
+        _maxHP = _hp;
         UnityEngine.Debug.Log($"공격력은 {_attack}이야.");
     }
 

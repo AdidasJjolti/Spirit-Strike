@@ -60,7 +60,7 @@ public class Poison : Skill
 
         while (elapsedTime < _stat._duration)
         {
-            Debug.Log($"{time}번째 대미지");
+            //Debug.Log($"{time}번째 대미지");
 
             yield return new WaitForSeconds(1.0f);
             elapsedTime += 1.0f;

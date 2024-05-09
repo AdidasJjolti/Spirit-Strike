@@ -13,8 +13,8 @@ public class UIHPBar : MonoBehaviour
     //public Vector3 _offset = Vector3.zero;
     public Transform _transform;        // HP바 UI를 붙일 오브젝트의 좌표
     Slider _slider;
-    Vector3 _monsterOffset = new Vector3 (0.0f, 1.2f, 0.0f);
-    Vector3 _playerOffset = new Vector3 (0.0f, 2.0f, 0.0f);
+    Vector3 _monsterOffset = new Vector3(0.0f, 1.2f, 0.0f);
+    Vector3 _playerOffset = new Vector3(0.0f, 2.0f, 0.0f);
 
     bool _isPlayer;
 
@@ -26,13 +26,13 @@ public class UIHPBar : MonoBehaviour
 
     void LateUpdate()
     {
-        if(_transform == null)
+        if (_transform == null)
         {
             return;
         }
-        
+
         // HP바 UI를 붙인 오브젝트의 머리 위 위치를 따라가면서 표시
-        if(_isPlayer)
+        if (_isPlayer)
         {
             transform.position = Camera.main.WorldToScreenPoint(_transform.position + _playerOffset);
         }
@@ -45,6 +45,11 @@ public class UIHPBar : MonoBehaviour
     public void ChangeValue(int hp)
     {
         _slider.value = hp;
+    }
+
+    public void ChangeMaxValue(int maxHP)
+    {
+        _slider.maxValue = maxHP;
     }
 
     bool CheckPlayer()
