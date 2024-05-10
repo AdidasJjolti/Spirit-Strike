@@ -45,7 +45,7 @@ public class FireSlash : Skill
             _projectiles[i].SetActive(true);
         }
 
-        Debug.Log($"스킬 공격력은 {_stat._damage}야");
+        //Debug.Log($"스킬 공격력은 {_stat._damage}야");
 
         Transform playerTr = FindObjectOfType<PlayerControl>().transform;
         _player = playerTr.position;
@@ -64,7 +64,7 @@ public class FireSlash : Skill
 
     public override SkillStat GetStat()
     {
-        Debug.Log("FireSlash에서 구현함");
+        //Debug.Log("FireSlash에서 구현함");
         return Stat;
     }
 }

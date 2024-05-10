@@ -43,6 +43,14 @@ public class PlayerControl : MonoBehaviour
     [SerializeField] ObjectManager _objManager;
     [SerializeField] PlayerDataManager _dataManager;
 
+    public PlayerDataManager DataManager
+    {
+        get
+        {
+            return _dataManager;
+        }
+    }
+
     SkillManager _skillManager;
 
     #region
@@ -240,9 +248,9 @@ public class PlayerControl : MonoBehaviour
 
         if (_targetEnemy != null && _targetEnemy.HP <= 0)
         {
-            // ToDo : 몬스터 정보로부터 획득 경험치 받아오도록 수정
-            // 임시로 몬스터 처치 시 20만큼 경험치 획득
-            _dataManager.GetExp(20);
+            // (new) 몬스터가 죽을 때 경험치를 전달하도록 변경
+            // 몬스터 정보로부터 획득 경험치 받아오도록 수정
+            //_dataManager.GetExp(_targetEnemy.EXP);
             _targetEnemy = null;
         }
 
@@ -280,13 +288,14 @@ public class PlayerControl : MonoBehaviour
             {
                 _targetEnemy.TakeDamage(_dataManager.Attack);
 
+                int level = _dataManager.Level;
+
                 // 타겟 몬스터가 죽으면 다음 타겟을 설정하기 위해 null로 변경 후 다음 타켓 몬스터 탐색
                 if (_targetEnemy.HP <= 0)
                 {
-                    int level = _dataManager.Level;
-
+                    // (new) 몬스터가 처치될 때 경험치를 전달하도록 변경
                     // 몬스터 처치 시 EXP만큼 경험치 획득
-                    _dataManager.GetExp(_targetEnemy.EXP);
+                    //_dataManager.GetExp(_targetEnemy.EXP);
 
                     // 만약 지역 변수 level과 데이터매니저의 레벨이 달라진 경우 레벨업이므로 HP바 UI의 최대값, 현재값을 변경
                     if(level != _dataManager.Level)
@@ -393,7 +402,7 @@ public class PlayerControl : MonoBehaviour
     {
         _dataManager.Hp -= damage;
         _hpBar.ChangeValue(_dataManager.Hp);
-        UnityEngine.Debug.Log($"아얏!");
+        //UnityEngine.Debug.Log($"아얏!");
     }
 
     public void Heal(int healAmount)

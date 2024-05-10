@@ -200,7 +200,7 @@ public class PlayerDataManager
 
         _maxHP = _hp;
 
-        UnityEngine.Debug.Log($"공격력은 {_attack}이야.");
+        //UnityEngine.Debug.Log($"공격력은 {_attack}이야.");
     }
 
     // PlayerDataManager을 통해서 레벨업 관련 데이터를 모두 처리하는 방식으로 코드 수정
@@ -218,12 +218,12 @@ public class PlayerDataManager
             _curExp = _accExp - _prevExp;
 
             Debug.Log($"현재 레벨은 {_level}이고 레벨업 필요 경험치는 {_exp}야.");
+
+            // 레벨업 발생 시 플레이어 스탯 갱신
+            LoadPlayerDataFromJson(Level);
         }
 
         Debug.Log($"현재 경험치는 {_curExp}야.");
-
-        // 레벨업 발생 시 플레이어 스탯 갱신
-        LoadPlayerDataFromJson(Level);
     }
 
     void LoadPlayerExperienceDataFromJson()

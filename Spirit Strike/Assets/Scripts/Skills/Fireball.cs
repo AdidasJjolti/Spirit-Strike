@@ -37,7 +37,7 @@ public class Fireball : Skill
     // 활성화되면 플레이어로부터 타겟 몬스터 방향으로 투사체 발사
     void OnEnable()
     {
-        Debug.Log($"스킬 공격력은 {_stat._damage}야");
+        //Debug.Log($"스킬 공격력은 {_stat._damage}야");
 
         _player = FindObjectOfType<PlayerControl>().transform.position;
         _target = FindObjectOfType<PlayerControl>().TargetEnemy.transform.position;
@@ -58,7 +58,7 @@ public class Fireball : Skill
 
     public override SkillStat GetStat()
     {
-        Debug.Log("Fireball에서 구현함");
+        //Debug.Log("Fireball에서 구현함");
         return Stat;
     }
 }

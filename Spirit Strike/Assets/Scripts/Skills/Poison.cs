@@ -104,7 +104,7 @@ public class Poison : Skill
 
     public override SkillStat GetStat()
     {
-        Debug.Log("Poison에서 구현함");
+        //Debug.Log("Poison에서 구현함");
         return Stat;
     }
 }

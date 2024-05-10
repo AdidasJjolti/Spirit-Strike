@@ -82,8 +82,8 @@ public class Enemy : MonoBehaviour
         _animator = GetComponent<Animator>();
 
         LoadEnemyData(_type);
-        Debug.Log($"몬스터의 공격력은 {_attack}이야.");
-        Debug.Log($"몬스터의 공격속도는 {_attackSpeed}이야.");
+        //Debug.Log($"몬스터의 공격력은 {_attack}이야.");
+        //Debug.Log($"몬스터의 공격속도는 {_attackSpeed}이야.");
 
         SetHPBar();
     }
@@ -142,12 +142,14 @@ public class Enemy : MonoBehaviour
 
         if (_HP <= 0)
         {
+            Debug.Log("몬스터가 죽었습니다.");
             StartCoroutine("Die");
         }
     }
 
     IEnumerator Die()
     {
+        _player.DataManager.GetExp(_exp);
         _animator.SetTrigger("Die");
         Destroy(_hpBarObj);
         yield return new WaitForSecondsRealtime(1.0f);
