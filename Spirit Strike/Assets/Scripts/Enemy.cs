@@ -11,6 +11,7 @@ public enum eMonster
 {
     NONE = 0,
     GHOST,
+    SLIME,
 
     MAX
 }

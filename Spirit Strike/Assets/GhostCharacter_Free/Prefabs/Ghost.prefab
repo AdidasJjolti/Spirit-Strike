@@ -366,7 +366,6 @@ MonoBehaviour:
   _attackSpeed: 1
   _player: {fileID: 0}
   _attackDelay: 1
-  _damage: 10
   _atkEffect: {fileID: 2374644240883026974}
   _waitSec: 0.19
   _hpBarPrefab: {fileID: 4075485195887041563, guid: f4466f219c07d994fa433c204f1b20bc, type: 3}
