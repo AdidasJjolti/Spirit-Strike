@@ -8,5 +8,15 @@
   "critical": 0,
   "atk_speed": 100,
   "exp": 5
+ },
+ {
+  "type": "SLIME",
+  "hp": 40,
+  "attack": 3,
+  "defence": 0,
+  "dodge": 0,
+  "critical": 0,
+  "atk_speed": 120,
+  "exp": 8
  }
 ]

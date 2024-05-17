@@ -43,7 +43,7 @@ public class Enemy : MonoBehaviour
     Rigidbody _rigid;
     Animator _animator;
 
-    [SerializeField] float _attackDelay;
+    [SerializeField] float _attackDelay = 1.0f;
     [SerializeField] ParticleSystem _atkEffect;
     [SerializeField] float _waitSec;
 
@@ -76,6 +76,8 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    float _distance = 2.0f;
+
     void Awake()
     {
         _agent = GetComponent<NavMeshAgent>();
@@ -97,6 +99,8 @@ public class Enemy : MonoBehaviour
         }
 
         _hpBarSlider.gameObject.SetActive(true);
+
+        Debug.Log($"공격 최소 거리는 {_distance}");
     }
 
     void Update()
@@ -104,7 +108,10 @@ public class Enemy : MonoBehaviour
         // 플레이어 따라가기
         // 플레이어와 충분히 가까워지면 추적 정지
         // 플레이어 공격
-        if (Vector3.Distance(transform.position, _player.transform.position) <= 1.2f)
+
+        //Debug.Log($"플레이어와의 거리 : {Vector3.Distance(transform.position, _player.transform.position)}");
+
+        if (Vector3.Distance(transform.position, _player.transform.position) <= _distance)
         {
             if (_player != null)
             {
