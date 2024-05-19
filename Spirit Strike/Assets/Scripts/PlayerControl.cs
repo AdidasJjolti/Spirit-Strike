@@ -375,7 +375,7 @@ public class PlayerControl : MonoBehaviour
 
         foreach (var obj in _objManager._monsterList)
         {
-            if (obj == null || obj.transform.GetComponent<Enemy>() == null || obj.transform.GetComponent<Enemy>().HP <= 0)
+            if (obj == null || obj.transform.GetComponentInChildren<Enemy>() == null || obj.transform.GetComponentInChildren<Enemy>().HP <= 0)
             {
                 continue;
             }
@@ -387,7 +387,7 @@ public class PlayerControl : MonoBehaviour
             if (curDiff < diff)
             {
                 diff = curDiff;
-                targetEnemy = obj.transform.gameObject.GetComponent<Enemy>();
+                targetEnemy = obj.transform.gameObject.GetComponentInChildren<Enemy>();
             }
         }
 

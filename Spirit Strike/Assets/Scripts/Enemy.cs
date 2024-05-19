@@ -80,9 +80,9 @@ public class Enemy : MonoBehaviour
 
     void Awake()
     {
-        _agent = GetComponent<NavMeshAgent>();
-        _rigid = GetComponent<Rigidbody>();
-        _animator = GetComponent<Animator>();
+        _agent = transform.GetComponentInParent<NavMeshAgent>();
+        _rigid = GetComponentInParent<Rigidbody>();
+        _animator = transform.GetComponentInParent<Animator>();
 
         LoadEnemyData(_type);
         //Debug.Log($"몬스터의 공격력은 {_attack}이야.");
