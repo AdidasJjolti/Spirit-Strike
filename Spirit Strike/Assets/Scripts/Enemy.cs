@@ -16,6 +16,11 @@ public enum eMonster
     MAX
 }
 
+
+[RequireComponent(typeof(NavMeshAgent))]
+[RequireComponent(typeof(Animator))]
+[RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(CapsuleCollider))]
 public class Enemy : MonoBehaviour
 {
     [SerializeField] eMonster _type;
