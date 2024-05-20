@@ -415,7 +415,7 @@ public class PlayerControl : MonoBehaviour
             _dataManager.Hp = _dataManager.MaxHP;
         }
 
-        _hpBar.ChangeValue(_dataManager.Hp);
+        //_hpBar.ChangeValue(_dataManager.Hp);
     }
 
     void SetHPBar()
