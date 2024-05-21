@@ -139,16 +139,21 @@ public class PlayerControl : MonoBehaviour
             }
             else
             {
+                FindNearestEnemy();
+
                 if (_isSkillReady && Vector3.Distance(transform.position, _targetEnemy.transform.position) <= 5.0f)
                 {
+                    _isSkillReady = false;
+                    return;
+
                     // 스킬 준비되면 스킬 사거리까지만 접근하여 스킬 사용
                     // 기본 공격보다 우선 체크
-                    if (_attackDelay >= (float)100 / _dataManager.AtkSpeed)
-                    {
-                        UseSkill();
-                    }
+                    //if (_attackDelay >= (float)100 / _dataManager.AtkSpeed)
+                    //{
+                        //UseSkill();
+                    //}
                 }
-                else if (!_isSkillReady && Vector3.Distance(transform.position, _targetEnemy.transform.position) <= 1.5f)
+                else if (!_isSkillReady && Vector3.Distance(transform.position, _targetEnemy.transform.position) <= 2.0f)
                 {
                     if (_targetEnemy != null)
                     {
@@ -372,7 +377,7 @@ public class PlayerControl : MonoBehaviour
         // 오브젝트 풀에서 타켓 몬스터 탐색
         //Stopwatch watch = new Stopwatch();
         //watch.Start();
-
+        /*
         foreach (var obj in _objManager._monsterList)
         {
             if (obj == null || obj.transform.GetComponentInChildren<Enemy>() == null || obj.transform.GetComponentInChildren<Enemy>().HP <= 0)
@@ -390,6 +395,27 @@ public class PlayerControl : MonoBehaviour
                 targetEnemy = obj.transform.gameObject.GetComponentInChildren<Enemy>();
             }
         }
+        */
+
+        
+        foreach (var obj in _objManager.EnemyList)
+        {
+            if (obj == null || obj == null || obj.HP <= 0)
+            {
+                continue;
+            }
+
+            Vector3 myPos = transform.position;
+            Vector3 targetPos = obj.transform.position;
+            float curDiff = Vector3.Distance(myPos, targetPos);
+
+            if (curDiff < diff)
+            {
+                diff = curDiff;
+                targetEnemy = obj;
+            }
+        }
+
 
         _targetEnemy = targetEnemy;
 

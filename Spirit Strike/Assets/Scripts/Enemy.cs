@@ -12,6 +12,7 @@ public enum eMonster
     NONE = 0,
     GHOST,
     SLIME,
+    SLIME_KING,
 
     MAX
 }

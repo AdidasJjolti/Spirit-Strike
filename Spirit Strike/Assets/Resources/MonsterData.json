@@ -18,5 +18,15 @@
   "critical": 0,
   "atk_speed": 120,
   "exp": 8
+ },
+ {
+  "type": "SLIME_KING",
+  "hp": 300,
+  "attack": 6,
+  "defence": 0,
+  "dodge": 0,
+  "critical": 0,
+  "atk_speed": 15000,
+  "exp": 30
  }
 ]

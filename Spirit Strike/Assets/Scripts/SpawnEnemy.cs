@@ -15,5 +15,7 @@ public class SpawnEnemy : MonoBehaviour
             _objManager._monsterList.Add(Instantiate(_enemy, transform));
             i++;
         }
+
+        _objManager.GetEnemy();
     }
 }
