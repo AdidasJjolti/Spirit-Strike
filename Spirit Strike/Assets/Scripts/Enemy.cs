@@ -59,6 +59,8 @@ public class Enemy : MonoBehaviour
     GameObject _hpBarObj;                       // 적 생성될 때 함께 생성한 HP바 게임오브젝트
     UIHPBar _hpBar;                             // 대미지를 입을 때 슬라이더 값을 변경할 함수 연결용 변수
 
+    ObjectManager _objManager;
+
     public int HP
     {
         get
@@ -86,6 +88,8 @@ public class Enemy : MonoBehaviour
 
     void Awake()
     {
+        _objManager = FindObjectOfType<ObjectManager>();
+
         _agent = transform.GetComponentInParent<NavMeshAgent>();
         _rigid = GetComponentInParent<Rigidbody>();
         _animator = transform.GetComponentInParent<Animator>();
@@ -165,8 +169,10 @@ public class Enemy : MonoBehaviour
     {
         _player.DataManager.GetExp(_exp);
         _animator.SetTrigger("Die");
-        Destroy(_hpBarObj);
+        Destroy(_hpBarObj); 
         yield return new WaitForSecondsRealtime(1.0f);
+        _objManager.MonsterList.Remove(this.gameObject);
+        _objManager.EnemyList.Remove(this);
         Destroy(this.gameObject);
         yield return null;
     }

@@ -4,8 +4,17 @@ using UnityEngine;
 
 public class ObjectManager : Singleton<ObjectManager>
 {
-    public List<GameObject> _monsterList;
-    List<Enemy> _enemyList;
+    [SerializeField] List<GameObject> _monsterList;
+
+    public List<GameObject> MonsterList
+    {
+        get
+        {
+            return _monsterList;
+        }
+    }
+
+    [SerializeField] List<Enemy> _enemyList;
 
     public List<Enemy> EnemyList
     {
@@ -22,13 +31,14 @@ public class ObjectManager : Singleton<ObjectManager>
         _enemyList = new List<Enemy>();
     }
 
-    public void GetEnemy()
+    public void FillEnemyList()
     {
         foreach(var monster in _monsterList)
         {
             Enemy enemy = monster.GetComponent<Enemy>();
 
-            if (enemy != null)
+            // 여러개의 스폰 포인트에서 몬스터가 생성되는 경우 foreach문에서 _monsterList를 돌 대마다 중복 계산할 수 있으므로 중복된 enemy가 들어간 경우 스킵
+            if (enemy != null && !_enemyList.Contains(enemy))
             {
                 _enemyList.Add(enemy);
             }

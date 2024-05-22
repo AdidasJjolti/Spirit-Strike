@@ -37,7 +37,7 @@ public class PlayerControl : MonoBehaviour
     eSkill _skillType;
 
     [SerializeField] bool _isSkillReady;
-    [SerializeField] float _rayDistance = 1.5f;
+    [SerializeField] float _rayDistance = 2.0f;
 
     [SerializeField] LayerMask _targetLayer;
     [SerializeField] ObjectManager _objManager;
@@ -275,22 +275,21 @@ public class PlayerControl : MonoBehaviour
             FindNearestEnemy();
         }
 
-        //UnityEngine.Debug.Log($"공격 속도는 {(float)100 / _dataManager.AtkSpeed}이야.");
-
         transform.LookAt(_targetEnemy.transform);
-
-        _isIdle = false;
-        _isWalking = false;
-
-        SetAttackAnimation(_isWalking, _isIdle);
 
         Ray ray = new Ray(transform.position + new Vector3(0, 0.5f, 0), transform.forward);
         RaycastHit hit;
 
         if (Physics.Raycast(ray, out hit, _rayDistance))
         {
+            _isIdle = false;
+            _isWalking = false;
+
+            SetAttackAnimation(_isWalking, _isIdle);
+
             if (hit.collider.GetComponent<Enemy>() == _targetEnemy)
             {
+                UnityEngine.Debug.Log($"몬스터에게 대미지를 입혔어.");
                 _targetEnemy.TakeDamage(_dataManager.Attack);
 
                 int level = _dataManager.Level;
@@ -312,6 +311,11 @@ public class PlayerControl : MonoBehaviour
                     _targetEnemy = null;
                 }
             }
+        }
+        else
+        {
+            Move();
+            return;
         }
 
         _attackDelay = 0;
