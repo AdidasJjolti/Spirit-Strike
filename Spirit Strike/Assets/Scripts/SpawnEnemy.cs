@@ -9,13 +9,23 @@ public class SpawnEnemy : MonoBehaviour
 
     void Start()
     {
+        StartCoroutine(Spawn());
+    }
+
+    IEnumerator Spawn()
+    {
         int i = 1;
+        GameObject obj;
         while (i <= 5)
         {
-            _objManager.MonsterList.Add(Instantiate(_enemy, transform));
+            obj = Instantiate(_enemy, transform);
+            _objManager.MonsterList.Add(obj);
+            _objManager.FillEnemyList(obj);
+            yield return new WaitForSeconds(3.0f);
             i++;
         }
 
-        _objManager.FillEnemyList();
+
+        yield return null;
     }
 }
