@@ -62,10 +62,14 @@ public class PlayerControl : MonoBehaviour
     UIHPBar _hpBar;                             // 대미지를 입을 때 슬라이더 값을 변경할 함수 연결용 변수
     #endregion
 
+    int _curLv;
+
     void Awake()
     {
         _dataManager = new PlayerDataManager();
         _skillManager = new SkillManager();
+
+        _curLv = _dataManager.Level;
 
         SetHPBar();
     }
@@ -292,8 +296,6 @@ public class PlayerControl : MonoBehaviour
                 UnityEngine.Debug.Log($"몬스터에게 대미지를 입혔어.");
                 _targetEnemy.TakeDamage(_dataManager.Attack);
 
-                int level = _dataManager.Level;
-
                 // 타겟 몬스터가 죽으면 다음 타겟을 설정하기 위해 null로 변경 후 다음 타켓 몬스터 탐색
                 if (_targetEnemy.HP <= 0)
                 {
@@ -302,7 +304,7 @@ public class PlayerControl : MonoBehaviour
                     //_dataManager.GetExp(_targetEnemy.EXP);
 
                     // 만약 지역 변수 level과 데이터매니저의 레벨이 달라진 경우 레벨업이므로 HP바 UI의 최대값, 현재값을 변경
-                    if(level != _dataManager.Level)
+                    if(_curLv != _dataManager.Level)
                     {
                         _hpBar.ChangeMaxValue(_dataManager.MaxHP);
                         _hpBar.ChangeValue(_dataManager.Hp);

@@ -110,7 +110,7 @@ public class Enemy : MonoBehaviour
 
         _hpBarSlider.gameObject.SetActive(true);
 
-        Debug.Log($"공격 최소 거리는 {_distance}");
+        //Debug.Log($"공격 최소 거리는 {_distance}");
     }
 
     void Update()

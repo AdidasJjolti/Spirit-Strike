@@ -223,7 +223,7 @@ public class PlayerDataManager
             LoadPlayerDataFromJson(Level);
         }
 
-        Debug.Log($"현재 경험치는 {_curExp}야.");
+        //Debug.Log($"현재 경험치는 {_curExp}야.");
     }
 
     void LoadPlayerExperienceDataFromJson()
