@@ -303,11 +303,13 @@ public class PlayerControl : MonoBehaviour
                     // 몬스터 처치 시 EXP만큼 경험치 획득
                     //_dataManager.GetExp(_targetEnemy.EXP);
 
-                    // 만약 지역 변수 level과 데이터매니저의 레벨이 달라진 경우 레벨업이므로 HP바 UI의 최대값, 현재값을 변경
+                    // 만약 멤버 변수 _curLv와 데이터매니저의 레벨이 달라진 경우 레벨업이므로 HP바 UI의 최대값, 현재값을 변경
+                    // _curLv가 바뀌었으므로 데이터매니저의 레벨과 일치화
                     if(_curLv != _dataManager.Level)
                     {
                         _hpBar.ChangeMaxValue(_dataManager.MaxHP);
                         _hpBar.ChangeValue(_dataManager.Hp);
+                        _curLv = _dataManager.Level;
                     }
 
                     _targetEnemy = null;
