@@ -6,17 +6,29 @@ public class SpawnEnemy : MonoBehaviour
 {
     [SerializeField] GameObject _enemy;
     [SerializeField] ObjectManager _objManager;
+    GameManager _gameManager;
 
     void Start()
+    {
+        _gameManager = FindObjectOfType<GameManager>();
+        //StartCoroutine(Spawn());
+    }
+
+    public void CallSpawn()
     {
         StartCoroutine(Spawn());
     }
 
     IEnumerator Spawn()
     {
+        if(_gameManager == null)
+        {
+            _gameManager = FindObjectOfType<GameManager>();
+        }
+
         int i = 1;
         GameObject obj;
-        while (i <= 5)
+        while (i <= _gameManager.SpawnCounts[_gameManager.StageCount])
         {
             obj = Instantiate(_enemy, transform);
             _objManager.MonsterList.Add(obj);
