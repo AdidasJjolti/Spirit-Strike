@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GameManager : Singleton<GameManager>
 {
-    int[] _spawnCounts = {5, 10, 15, 20};
+    int[] _spawnCounts = {1, 1, 1, 1};
 
     public int[] SpawnCounts
     {
@@ -24,7 +24,7 @@ public class GameManager : Singleton<GameManager>
         }
     }
 
-    int _stageCount;
+    int _stageCount = 1;
 
     public int StageCount
     {
@@ -47,6 +47,28 @@ public class GameManager : Singleton<GameManager>
         foreach(var point in _spawnPoints)
         {
             point.CallSpawn();
+        }
+    }
+
+    public void AddSlayCount()
+    {
+        _slayCount++;
+
+        if(_slayCount >= _spawnCounts[_stageCount - 1] * _spawnPoints.Length)
+        {
+            if(_stageCount >= _spawnCounts.Length)
+            {
+                return;
+            }
+            _stageCount++;
+            Debug.Log($"{_stageCount} 스테이지 입장");
+
+            foreach (var point in _spawnPoints)
+            {
+                point.CallSpawn();
+            }
+
+            _slayCount = 0;
         }
     }
 }

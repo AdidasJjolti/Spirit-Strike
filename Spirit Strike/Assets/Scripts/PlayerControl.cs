@@ -53,6 +53,8 @@ public class PlayerControl : MonoBehaviour
 
     SkillManager _skillManager;
 
+    GameManager _gameManager;
+
     #region
     // HP바 UI 설정 전역 변수
     [SerializeField] GameObject _hpBarPrefab;   // HP바 프리팹
@@ -68,6 +70,7 @@ public class PlayerControl : MonoBehaviour
     {
         _dataManager = new PlayerDataManager();
         _skillManager = new SkillManager();
+        _gameManager = FindObjectOfType<GameManager>();
 
         _curLv = _dataManager.Level;
 
@@ -311,6 +314,8 @@ public class PlayerControl : MonoBehaviour
                         _hpBar.ChangeValue(_dataManager.Hp);
                         _curLv = _dataManager.Level;
                     }
+
+                    _gameManager.AddSlayCount();
 
                     _targetEnemy = null;
                 }
