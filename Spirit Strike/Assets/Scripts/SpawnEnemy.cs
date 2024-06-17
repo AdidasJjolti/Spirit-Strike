@@ -40,4 +40,9 @@ public class SpawnEnemy : MonoBehaviour
 
         yield return null;
     }
+
+    public void SpawnBossMonster(int stageCount)
+    {
+        Debug.Log("보스몬스터 소환");
+    }
 }

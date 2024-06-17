@@ -61,7 +61,8 @@ public class GameManager : Singleton<GameManager>
                 return;
             }
 
-            GoToNextStage();
+            // ToDo : 스테이지 마지막에 보스 몬스터 소환하는 로직 추가하기
+            _spawnPoints[0].SpawnBossMonster(_stageCount);
         }
     }
 

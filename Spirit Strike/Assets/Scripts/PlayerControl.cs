@@ -315,8 +315,6 @@ public class PlayerControl : MonoBehaviour
                         _curLv = _dataManager.Level;
                     }
 
-                    //_gameManager.AddSlayCount();
-
                     _targetEnemy = null;
                 }
             }
