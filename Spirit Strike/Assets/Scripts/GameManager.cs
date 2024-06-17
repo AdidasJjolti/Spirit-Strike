@@ -60,15 +60,21 @@ public class GameManager : Singleton<GameManager>
             {
                 return;
             }
-            _stageCount++;
-            Debug.Log($"{_stageCount} 스테이지 입장");
 
-            foreach (var point in _spawnPoints)
-            {
-                point.CallSpawn();
-            }
-
-            _slayCount = 0;
+            GoToNextStage();
         }
+    }
+
+    void GoToNextStage()
+    {
+        _stageCount++;
+        Debug.Log($"{_stageCount} 스테이지 입장");
+
+        foreach (var point in _spawnPoints)
+        {
+            point.CallSpawn();
+        }
+
+        _slayCount = 0;
     }
 }

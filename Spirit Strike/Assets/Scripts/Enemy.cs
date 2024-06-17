@@ -60,6 +60,7 @@ public class Enemy : MonoBehaviour
     UIHPBar _hpBar;                             // 대미지를 입을 때 슬라이더 값을 변경할 함수 연결용 변수
 
     ObjectManager _objManager;
+    GameManager _gameManager;
 
     public int HP
     {
@@ -89,6 +90,7 @@ public class Enemy : MonoBehaviour
     void Awake()
     {
         _objManager = FindObjectOfType<ObjectManager>();
+        _gameManager = FindObjectOfType<GameManager>();
 
         _agent = transform.GetComponentInParent<NavMeshAgent>();
         _rigid = GetComponentInParent<Rigidbody>();
@@ -161,6 +163,7 @@ public class Enemy : MonoBehaviour
         if (_HP <= 0)
         {
             Debug.Log("몬스터가 죽었습니다.");
+            _gameManager.AddSlayCount();
             StartCoroutine("Die");
         }
     }
