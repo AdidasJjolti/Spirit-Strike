@@ -36,6 +36,16 @@ public class GameManager : Singleton<GameManager>
 
     SpawnEnemy[] _spawnPoints;
 
+    bool _isBossMonster;
+
+    public bool IsBossMonster
+    {
+        get
+        {
+            return _isBossMonster;
+        }
+    }
+
     public override void Awake()
     {
         base.Awake();       // Singleton 클래스는 유니티 씬에서 따로 부르는 부분이 없으므로 base.Awake()를 호출하여 부모 클래스를 실행하도록 유도
@@ -52,17 +62,25 @@ public class GameManager : Singleton<GameManager>
 
     public void AddSlayCount()
     {
-        _slayCount++;
-
-        if(_slayCount >= _spawnCounts[_stageCount - 1] * _spawnPoints.Length)
+        // 보스몬스터가 아닌 몬스터 처치 시
+        if(_isBossMonster == false)
         {
-            if(_stageCount >= _spawnCounts.Length)
-            {
-                return;
-            }
+            _slayCount++;
 
-            // ToDo : 스테이지 마지막에 보스 몬스터 소환하는 로직 추가하기
-            _spawnPoints[0].SpawnBossMonster(_stageCount);
+            if (_slayCount >= _spawnCounts[_stageCount - 1] * _spawnPoints.Length)
+            {
+                if (_stageCount >= _spawnCounts.Length)
+                {
+                    return;
+                }
+
+                // ToDo : 스테이지 마지막에 보스 몬스터 소환하는 로직 추가하기
+                _spawnPoints[0].SpawnBossMonster(_stageCount);
+            }
+        }
+        else
+        {
+            GoToNextStage();
         }
     }
 

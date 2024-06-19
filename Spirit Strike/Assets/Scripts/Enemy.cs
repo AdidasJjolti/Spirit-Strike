@@ -189,8 +189,6 @@ public class Enemy : MonoBehaviour
 
     void AttackPlayer()
     {
-        //Debug.Log($"{gameObject.transform.name}이 플레이어 공격!");
-
         if(_animator == null)
         {
             Debug.LogError("Animator is Null");
