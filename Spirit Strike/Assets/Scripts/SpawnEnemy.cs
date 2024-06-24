@@ -11,7 +11,6 @@ public class SpawnEnemy : MonoBehaviour
     void Start()
     {
         _gameManager = FindObjectOfType<GameManager>();
-        //StartCoroutine(Spawn());
     }
 
     public void CallSpawn()
@@ -36,7 +35,6 @@ public class SpawnEnemy : MonoBehaviour
             yield return new WaitForSeconds(3.0f);
             i++;
         }
-
 
         yield return null;
     }

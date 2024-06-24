@@ -43,17 +43,5 @@ public class ObjectManager : Singleton<ObjectManager>
         {
             _enemyList.Add(enemy);
         }
-        /*
-        foreach (var monster in _monsterList)
-        {
-            Enemy enemy = monster.GetComponent<Enemy>();
-
-            // 여러개의 스폰 포인트에서 몬스터가 생성되는 경우 foreach문에서 _monsterList를 돌 대마다 중복 계산할 수 있으므로 중복된 enemy가 들어간 경우 스킵
-            if (enemy != null && !_enemyList.Contains(enemy))
-            {
-                _enemyList.Add(enemy);
-            }
-        }
-        */
     }
 }
