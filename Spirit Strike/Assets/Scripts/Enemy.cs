@@ -9,7 +9,7 @@ using System.IO;
 
 public enum eMonster
 {
-    NONE = 0,
+    NONE = -1,
     GHOST,
     SLIME,
     SLIME_KING,

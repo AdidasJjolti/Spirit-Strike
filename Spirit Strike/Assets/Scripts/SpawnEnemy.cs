@@ -4,21 +4,26 @@ using UnityEngine;
 
 public class SpawnEnemy : MonoBehaviour
 {
-    [SerializeField] GameObject _enemy;
+    Dictionary<eMonster, string> _monsterDic = new Dictionary<eMonster, string>();        // 몬스터 타입과 몬스터 프리팹 경로를 저장할 딕셔너리
+
+    //[SerializeField] GameObject _enemy;
     [SerializeField] ObjectManager _objManager;
     GameManager _gameManager;
 
     void Start()
     {
         _gameManager = FindObjectOfType<GameManager>();
+
+        _monsterDic.Add(eMonster.GHOST, "Prefabs/Monsters/GHOST");
+        _monsterDic.Add(eMonster.SLIME, "Prefabs/Monsters/SLIME");
     }
 
-    public void CallSpawn()
+    public void CallSpawn(eMonster type)
     {
-        StartCoroutine(Spawn());
+        StartCoroutine(Spawn(type));
     }
 
-    IEnumerator Spawn()
+    IEnumerator Spawn(eMonster type)
     {
         if(_gameManager == null)
         {
@@ -26,17 +31,23 @@ public class SpawnEnemy : MonoBehaviour
         }
 
         int i = 1;
-        GameObject obj;
-        while (i <= _gameManager.SpawnCounts[_gameManager.StageCount])
+        GameObject obj = LoadPrefab(type);
+        while (i <= _gameManager.SpawnCount)
         {
-            obj = Instantiate(_enemy, transform);
-            _objManager.MonsterList.Add(obj);
-            _objManager.FillEnemyList(obj);
+            GameObject enemy = Instantiate(obj, transform);
+            _objManager.MonsterList.Add(enemy);
+            _objManager.FillEnemyList(enemy);
             yield return new WaitForSeconds(3.0f);
             i++;
         }
 
         yield return null;
+    }
+
+    public GameObject LoadPrefab(eMonster type)
+    {
+        GameObject prefab = Resources.Load<GameObject>(_monsterDic[type]);           // 몬스터 프리팹 생성
+        return prefab;
     }
 
     public void SpawnBossMonster(int stageCount)

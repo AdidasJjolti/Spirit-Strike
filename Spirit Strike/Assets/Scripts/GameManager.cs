@@ -1,20 +1,34 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using LitJson;
+using System.IO;
 
 public class GameManager : Singleton<GameManager>
 {
-    int[] _spawnCounts = {1, 1, 1, 1};
+    JsonData _data;
 
-    public int[] SpawnCounts
+    int _spawnCount;
+
+    public int SpawnCount
     {
         get
         {
-            return _spawnCounts;
+            return _spawnCount;
         }
     }
 
     int _slayCount;
+
+    int _type;
+
+    public int Type
+    {
+        get
+        {
+            return _type;
+        }
+    }
 
     public int SlayCount
     {
@@ -54,9 +68,10 @@ public class GameManager : Singleton<GameManager>
 
     void Start()
     {
-        foreach(var point in _spawnPoints)
+        LoadSpawnDataFromJson(_stageCount);
+        foreach (var point in _spawnPoints)
         {
-            point.CallSpawn();
+            point.CallSpawn((eMonster)_type);
         }
     }
 
@@ -67,13 +82,8 @@ public class GameManager : Singleton<GameManager>
         {
             _slayCount++;
 
-            if (_slayCount >= _spawnCounts[_stageCount - 1] * _spawnPoints.Length)
+            if (_slayCount >= _spawnCount * _spawnPoints.Length)
             {
-                if (_stageCount >= _spawnCounts.Length)
-                {
-                    return;
-                }
-
                 // ToDo : 스테이지 마지막에 보스 몬스터 소환하는 로직 추가하기
                 _spawnPoints[0].SpawnBossMonster(_stageCount);
             }
@@ -88,12 +98,22 @@ public class GameManager : Singleton<GameManager>
     {
         _stageCount++;
         Debug.Log($"{_stageCount} 스테이지 입장");
+        LoadSpawnDataFromJson(_stageCount);
 
         foreach (var point in _spawnPoints)
         {
-            point.CallSpawn();
+            point.CallSpawn((eMonster)_type);
         }
 
         _slayCount = 0;
+    }
+
+    void LoadSpawnDataFromJson(int stage)
+    {
+        string JsonString = File.ReadAllText(Application.dataPath + "/Resources/SpawnData.json");
+        JsonData jsonData = JsonMapper.ToObject(JsonString);
+        _data = jsonData;
+        _spawnCount = (int)_data[stage - 1]["spawncount"];
+        _type = (int)_data[stage - 1]["type"];
     }
 }
