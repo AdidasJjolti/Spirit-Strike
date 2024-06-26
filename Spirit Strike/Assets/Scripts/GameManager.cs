@@ -18,6 +18,18 @@ public class GameManager : Singleton<GameManager>
         }
     }
 
+    JsonData _bossData;
+
+    int _bossSpawnCount;
+
+    public int BossSpawnCount
+    {
+        get
+        {
+            return _bossSpawnCount;
+        }
+    }
+
     int _slayCount;
 
     int _type;
@@ -27,6 +39,16 @@ public class GameManager : Singleton<GameManager>
         get
         {
             return _type;
+        }
+    }
+
+    int _bossType;
+
+    public int BossType
+    {
+        get
+        {
+            return _bossType;
         }
     }
 
@@ -84,11 +106,14 @@ public class GameManager : Singleton<GameManager>
 
             if (_slayCount >= _spawnCount * _spawnPoints.Length)
             {
+                _isBossMonster = true;
+
                 // ToDo : 스테이지 마지막에 보스 몬스터 소환하는 로직 추가하기
-                _spawnPoints[0].SpawnBossMonster(_stageCount);
+                LoadBossSpawnDataFromJson(_stageCount);
+                _spawnPoints[0].SpawnBossMonster(_bossSpawnCount, (eMonster)_bossType);
             }
         }
-        else
+        else if(_isBossMonster == true)
         {
             GoToNextStage();
         }
@@ -115,5 +140,14 @@ public class GameManager : Singleton<GameManager>
         _data = jsonData;
         _spawnCount = (int)_data[stage - 1]["spawncount"];
         _type = (int)_data[stage - 1]["type"];
+    }
+
+    void LoadBossSpawnDataFromJson(int stage)
+    {
+        string JsonString = File.ReadAllText(Application.dataPath + "/Resources/BossSpawnData.json");
+        JsonData jsonData = JsonMapper.ToObject(JsonString);
+        _bossData = jsonData;
+        _bossSpawnCount = (int)_data[stage - 1]["spawncount"];
+        _bossType = (int)_data[stage - 1]["type"];
     }
 }
