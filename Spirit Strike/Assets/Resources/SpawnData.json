@@ -1,0 +1,22 @@
+[
+ {
+  "stage": 1,
+  "type": 0,
+  "spawncount": 1
+ },
+ {
+  "stage": 2,
+  "type": 0,
+  "spawncount": 2
+ },
+ {
+  "stage": 3,
+  "type": 1,
+  "spawncount": 1
+ },
+ {
+  "stage": 4,
+  "type": 1,
+  "spawncount": 2
+ }
+]
