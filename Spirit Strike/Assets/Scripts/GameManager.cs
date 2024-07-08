@@ -147,7 +147,7 @@ public class GameManager : Singleton<GameManager>
         string JsonString = File.ReadAllText(Application.dataPath + "/Resources/BossSpawnData.json");
         JsonData jsonData = JsonMapper.ToObject(JsonString);
         _bossData = jsonData;
-        _bossSpawnCount = (int)_data[stage - 1]["spawncount"];
-        _bossType = (int)_data[stage - 1]["type"];
+        _bossSpawnCount = (int)_bossData[stage - 1]["spawncount"];
+        _bossType = (int)_bossData[stage - 1]["type"];
     }
 }
